@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class User {
@@ -17,34 +16,40 @@ public class User {
 
     public User(String id, File file) {
         // File file; //variable for the file where reader user is read from
+        String[]userDataArray=findOne(id,file);
+
+        this.id=userDataArray[0];
+        username=userDataArray[1];
+        surname=userDataArray[2];
+        houseNumber=userDataArray[3];
+        postcode=userDataArray[4];
+        city=userDataArray[5];
+        role=userDataArray[6];
+
+        
+    }
+
+    
+    private String[] findOne(String id, File file){
+
         Scanner fileReader; // scanner variable is created to read the file and return lines
         String userDataStr; // string variable to hold unformatted string after line is read
-        String[] userDataArray; // array variable to hold splitted string
+        String[] userDataArray={""}; // array variable to hold splitted string
         boolean found = false;
 
         try {
             fileReader = new Scanner(file);
             while (!found) {
-                userDataStr = fileReader.nextLine();
-                userDataArray = userDataStr.split(",");
-                if (userDataArray[0].equals(id)) {
+                userDataStr = fileReader.nextLine(); //reads/returns current line from the txt file
+                userDataArray = userDataStr.split(",");//creates an array that splits the data by comma
+                if (userDataArray[0].equals(id)) {//checks if the id given as criteria is in the txt file
 
                     for (int i=0;i<userDataArray.length;i++) {
-                        userDataArray[i]=userDataArray[i].strip();
+                        userDataArray[i]=userDataArray[i].strip(); // removes all trailing and leading whitespace
                         
                     }
-
-                    this.id=userDataArray[0];
-                    username=userDataArray[1];
-                    surname=userDataArray[2];
-                    houseNumber=userDataArray[3];
-                    postcode=userDataArray[4];
-                    city=userDataArray[5];
-                    role=userDataArray[6];
-
-
-                    found = true;
-
+                    fileReader.close();
+                    return userDataArray;
                 }
 
             }
@@ -53,9 +58,11 @@ public class User {
             ;
         }
 
-
+        return userDataArray;
         
+
     }
+
 
     public void print(){
         System.out.println(this.id);
