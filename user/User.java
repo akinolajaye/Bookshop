@@ -1,3 +1,5 @@
+package user;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -6,19 +8,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class User {
-    public static void main(String[] args) {
-        User guy = new User("101", "UserAccounts.txt"); //creates new user
 
-
-    }
-
-    /* creates the attributes for the user */
-   
-
+    
     private String id, username, surname,houseNumber, postcode, city, role;
     private String filename;
     private String regex ="\\s*,\\s*";//defines a regex that removes commas and trailing white space
-
+    
+    /* creates the attributes for the user */
     public User(String id, String filename) {
 
         this.filename=filename;
