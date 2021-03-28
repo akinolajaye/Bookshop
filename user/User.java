@@ -13,7 +13,7 @@ public class User {
     private String id, username, surname,houseNumber, postcode, city, role;
     private String filename;
     private String regex ="\\s*,\\s*";//defines a regex that removes commas and trailing white space
-    
+
     /* creates the attributes for the user */
     public User(String id, String filename) {
 
@@ -68,7 +68,7 @@ public class User {
     }
 
 
-    public List<List<String>> viewBooks(String filename) {
+    public List<List<String>> findAll(String filename) {
 
         File file= new File(filename);
 
@@ -146,7 +146,10 @@ public class User {
 
     }
 
-
+    public List<List<String>> viewBooks(){
+         
+        return findAll(this.filename);
+    }
 
     
 
