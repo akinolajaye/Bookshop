@@ -15,9 +15,9 @@ public class User {
     private String regex ="\\s*,\\s*";//defines a regex that removes commas and trailing white space
 
     /* creates the attributes for the user */
-    protected User(String id, String filename) {
+    protected User(String id) {
 
-        this.filename=filename;
+        this.filename="UserAccounts.txt";
         
         List<String> userDataArray=findOne(id,this.filename);
 
@@ -40,12 +40,12 @@ public class User {
         Scanner fileReader; // scanner variable is created to read the file and return lines
         String dataStr; // string variable to hold unformatted string after line is read
          // array variable to hold splitted string
-        boolean found = false;
+        
         List<String> dataArray=new ArrayList<>();
 
         try {
             fileReader = new Scanner(file);
-            while (!found) {
+            while (fileReader.hasNextLine()) {
                 
                 dataStr = fileReader.nextLine(); //reads/returns current line from the txt file
                 

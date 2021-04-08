@@ -6,18 +6,23 @@ import user.User;
 
 public class Customer extends User {
 
-    public  Basket myBasket = new Basket();
+    private  Basket myBasket = new Basket();
 
-    public Customer(String id, String filename){
-        super(id, filename);
+    
+
+    public Customer(String id){
+        super(id);
     }
 
     public static void main(String[] args) {
         
-        Customer joe = new Customer("101", "UserAccounts.txt");
+        Customer joe = new Customer("101");
 
         joe.addItemToBasket("22334455");
+        joe.addItemToBasket("11224455");
+        System.out.println(joe.myBasket.items.get(1).title);
         System.out.println(joe.myBasket.items.get(0).title);
+        
 
         
 
@@ -31,11 +36,55 @@ public class Customer extends User {
         Books newItem = new Books(item);//creates a class instance of the book found
         myBasket.addToBasket(newItem);//calls the add to basket function
 
+    
+    }
+
+
+
+    public void removeItemFromBasket(String id){
+
+        Books book;
+
+        for (Books remove : myBasket.items) {//foreach loop through basket.items
+
+            if (remove.isbn.equals(id)){//checks if ids match
+
+                book=remove;
+                myBasket.removeFromBasket(book);
+                break;
+
+            }
+            
+        }
         
+
+    }
+
+
+
+    public boolean payForItems(String payMethod,String cardNumber,String securityCode,String email){
 
         
 
-       
+        int totalPrice=0;
+        
+
+        for (Books book : myBasket.items) {//foreach loop through basket.items
+
+            totalPrice+=book.retailPrice;
+        }
+
+        if (payMethod.equals("Credit Card")){
+            CreditCard payment =new CreditCard("Credit Card", totalPrice, cardNumber, securityCode);
+            payment.validKey();//add validation
+            if (payment.paid){
+                return true;
+            }
+        }
+
+        
+
+        return false;
 
     }
 
@@ -68,11 +117,61 @@ class Books{
 
 class Basket{
 
-    public List<Books> items = new ArrayList<>();
+
+    public List<Books> items = new ArrayList<>();//basket is a list of the books class
 
     public void addToBasket(Books newItem){
         
         items.add(newItem);//adds book instance to a list of books
     }
 
+    public void removeFromBasket(Books book){
+
+        items.remove(book);
+
+        
+    }
+
+
+
+
+}
+
+abstract class Pay{
+
+    int amount;
+    String payMethod;
+    boolean paid = false;
+
+    Pay(String payMethod,int amount){
+
+        this.amount=amount;
+        this.payMethod=payMethod;
+
+    }
+
+     public abstract void validKey();
+
+    
+
+}
+
+
+class CreditCard extends Pay{
+    String cardNumber,securityCode;
+
+    public CreditCard(String payMethod,int amount,String cardNumber,String securityCode){
+        super(payMethod, amount);
+        this.cardNumber=cardNumber;
+        this.securityCode=securityCode;
+    }
+
+    public void validKey(){
+
+        System.out.println("hello");
+
+        paid =true;
+
+    }
+    
 }
