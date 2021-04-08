@@ -15,7 +15,7 @@ public class User {
     private String regex ="\\s*,\\s*";//defines a regex that removes commas and trailing white space
 
     /* creates the attributes for the user */
-    public User(String id, String filename) {
+    protected User(String id, String filename) {
 
         this.filename=filename;
         
@@ -146,9 +146,10 @@ public class User {
 
     }
 
-    public List<List<String>> viewBooks(){
+    public List<List<String>> viewBooks(String filename){
+        
          
-        return findAll(this.filename);
+        return findAll(filename);
     }
 
     
