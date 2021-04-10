@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import user.User;
 
@@ -7,6 +9,7 @@ import user.User;
 public class Customer extends User {
 
     private  Basket myBasket = new Basket();
+    private float totalPrice=0;
 
     
 
@@ -20,8 +23,12 @@ public class Customer extends User {
 
         joe.addItemToBasket("22334455");
         joe.addItemToBasket("11224455");
+        System.out.println(joe.myBasket.items);
         System.out.println(joe.myBasket.items.get(1).title);
         System.out.println(joe.myBasket.items.get(0).title);
+        joe.payForItems("Credit Card", "4756353625344", "465", "");
+        System.out.println(joe.myBasket.items);
+       
         
 
         
@@ -60,26 +67,46 @@ public class Customer extends User {
 
     }
 
+    public float totalPrice(){
+
+        this.totalPrice=0;
+        
+        
+
+        for (Books book : myBasket.items) {//foreach loop through basket.items
+
+            this.totalPrice+=book.retailPrice;
+        }
+
+        return totalPrice;
+
+    }
+
 
 
     public boolean payForItems(String payMethod,String cardNumber,String securityCode,String email){
 
         
+        float price=totalPrice();
 
-        int totalPrice=0;
-        
-
-        for (Books book : myBasket.items) {//foreach loop through basket.items
-
-            totalPrice+=book.retailPrice;
-        }
 
         if (payMethod.equals("Credit Card")){
-            CreditCard payment =new CreditCard("Credit Card", totalPrice, cardNumber, securityCode);
+            CreditCard payment =new CreditCard("Credit Card", price, cardNumber, securityCode);
             payment.validKey();//add validation
             if (payment.paid){
+                myBasket.emptyBasket();
+                System.out.println(totalPrice);
                 return true;
             }
+
+        }else if(payMethod.equals("PayPal")){
+            PayPal payment = new PayPal("PayPal", price, email);
+            payment.validKey();
+            if (payment.paid){
+                myBasket.emptyBasket();
+                return true;
+            }
+            
         }
 
         
@@ -88,6 +115,10 @@ public class Customer extends User {
 
     }
 
+
+    public void updateActivityLog(String payMethod,String function){
+
+    }
 }
 
 
@@ -133,17 +164,19 @@ class Basket{
     }
 
 
-
+    public void emptyBasket(){
+        items.clear();
+    }
 
 }
 
 abstract class Pay{
 
-    int amount;
+    float amount;
     String payMethod;
     boolean paid = false;
 
-    Pay(String payMethod,int amount){
+    Pay(String payMethod,float amount){
 
         this.amount=amount;
         this.payMethod=payMethod;
@@ -158,9 +191,13 @@ abstract class Pay{
 
 
 class CreditCard extends Pay{
-    String cardNumber,securityCode;
+    private String cardNumber,securityCode;
+    private static final String CARD_NUM_REGEX="^[0-9]{13}$|^[0-9]{16}$";
+    
+    private static final String SEC_CODE_REGEX="^[0-9]{3}$";
+    
 
-    public CreditCard(String payMethod,int amount,String cardNumber,String securityCode){
+    public CreditCard(String payMethod,float amount,String cardNumber,String securityCode){
         super(payMethod, amount);
         this.cardNumber=cardNumber;
         this.securityCode=securityCode;
@@ -168,10 +205,59 @@ class CreditCard extends Pay{
 
     public void validKey(){
 
-        System.out.println("hello");
+        Pattern cardNum=Pattern.compile(CARD_NUM_REGEX);
+        Pattern secCode =Pattern.compile(SEC_CODE_REGEX);
 
-        paid =true;
+        Matcher cardMatch = cardNum.matcher(this.cardNumber);
+        Matcher secMatch = secCode.matcher(this.securityCode);
+
+        if (cardMatch.matches()&&secMatch.matches()){
+            
+            paid =true;
+            System.out.println("Valid Card number");
+
+
+        }else{
+            System.out.println("invalid");
+        }
+
+
+
+
+        
 
     }
     
+}
+
+
+
+class PayPal extends Pay{
+
+    private String email;
+    private static final String EMAIL_REGEX="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
+
+    public PayPal(String payMethod,float amount,String email){
+        super(payMethod, amount);
+
+        this.email=email;
+        
+    }
+
+
+    public void validKey(){
+
+        Pattern pattern =Pattern.compile(EMAIL_REGEX);
+        Matcher match =pattern.matcher(this.email);
+
+        if (match.matches()){
+            paid =true;
+            System.out.println("valid email");
+        }
+        
+
+        
+
+    }
+
 }
