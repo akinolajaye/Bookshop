@@ -1,5 +1,14 @@
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +36,10 @@ public class Customer extends User {
         System.out.println(joe.myBasket.items.get(1).title);
         System.out.println(joe.myBasket.items.get(0).title);
         joe.payForItems("Credit Card", "4756353625344", "465", "");
-        System.out.println(joe.myBasket.items);
+        System.out.println(joe.findOne("ff", "ActivityLog.txt"));
+        joe.myBasket.updateStock("22446688","add");
+        
+        
        
         
 
@@ -116,16 +128,40 @@ public class Customer extends User {
     }
 
 
-    public void updateActivityLog(String payMethod,String function){
+    public void updateActivityLog(String payMethod,String result){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDateTime now =LocalDateTime.now();
+        String date = dtf.format(now);
 
-    }
+
+        
+
+        try{
+
+            FileWriter log = new FileWriter("ActivityLog.txt",true);
+            for (Books book  : myBasket.items) {
+                log.write(this.id+","+this.postcode +","+book.retailPrice+","+"quantity"+","+result +","+payMethod+","+date+"\n");
+                
+            }
+            
+            log.close();
+
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        
+
+
+    } 
 }
 
 
 class Books{
-    String isbn,type,title,lang,genre,releaseDate,add1,add2;
-    int quantity;
-    float retailPrice;
+    protected String isbn,type,title,lang,genre,releaseDate,add1,add2;
+    protected int quantity;
+    protected float retailPrice;
 
     public Books(List<String> newBook){
 
@@ -168,6 +204,69 @@ class Basket{
         items.clear();
     }
 
+    public void updateStock(String id,String choice){
+
+        String dataStr;// string variable to hold unformatted string after line is read
+        List<String> dataArray=new ArrayList<>();// array variable to hold splitted string
+        StringBuffer buff=new StringBuffer();
+        int found=0;
+        int quantity;
+
+        try {
+           
+            BufferedReader file = new BufferedReader(new FileReader("Stock.txt"));
+            while ((dataStr=file.readLine()) !=null) {
+
+                switch(found){
+                    case 0:
+                        dataArray = Arrays.asList(dataStr.split("\\s*,\\s*"));//creates an array that splits the data by comma using regex
+                        if (dataArray.get(0).equals(id)) {//checks if the id given as criteria is in the txt file
+                            String buffString;
+                            quantity=Integer.parseInt(dataArray.get(7)); 
+                            
+        
+                            //code to convert array to string
+                            if (choice.equals("add")){
+
+                                quantity+=1;
+                            }else if (choice.equals("remove")){
+                                quantity-=1;
+                            }
+
+                                    
+                            dataArray.set(7,Integer.toString(quantity));                            
+                            buffString = dataArray.toString();
+                            buffString= buffString.replace("[", "").replace("]", "").replace(" ", "");
+                            buff.append(buffString+"\n");
+                            found=1;
+                            
+                        }else{
+                            buff.append(dataStr+"\n");
+                        }
+                        break;
+
+                    case 1:
+                        buff.append(dataStr+"\n");
+                        break;
+
+                }
+               
+            }
+            file.close();
+
+            FileWriter stockFile = new FileWriter("Stock.txt");
+            stockFile.write(buff.toString());
+            stockFile.close();
+            
+
+        } catch ( IOException e) {
+            ;
+        }
+
+        
+        
+
+    }
 }
 
 abstract class Pay{

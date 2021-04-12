@@ -1,7 +1,10 @@
 package user;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,9 +13,9 @@ import java.util.Scanner;
 public class User {
 
     
-    private String id, username, surname,houseNumber, postcode, city, role;
-    private String filename;
-    private String regex ="\\s*,\\s*";//defines a regex that removes commas and trailing white space
+    protected String id, username, surname,houseNumber, postcode, city, role;
+    protected String filename;
+    protected String regex ="\\s*,\\s*";//defines a regex that removes commas and trailing white space
 
     /* creates the attributes for the user */
     protected User(String id) {
@@ -35,33 +38,34 @@ public class User {
 
 
     public List<String> findOne(String id,String filename){
-
-        File file= new File(filename);
-        Scanner fileReader; // scanner variable is created to read the file and return lines
-        String dataStr; // string variable to hold unformatted string after line is read
-         // array variable to hold splitted string
-        
-        List<String> dataArray=new ArrayList<>();
+  
+        String dataStr;// string variable to hold unformatted string after line is read
+        List<String> dataArray=new ArrayList<>();// array variable to hold splitted string
 
         try {
-            fileReader = new Scanner(file);
-            while (fileReader.hasNextLine()) {
+           
+            BufferedReader file = new BufferedReader(new FileReader(filename));
+            while ((dataStr=file.readLine()) !=null) {
                 
-                dataStr = fileReader.nextLine(); //reads/returns current line from the txt file
+                //dataStr = fileReader.nextLine(); //reads/returns current line from the txt file
                 
                 dataArray = Arrays.asList(dataStr.split(regex));//creates an array that splits the data by comma using regex
                 if (dataArray.get(0).equals(id)) {//checks if the id given as criteria is in the txt file
 
-                    fileReader.close();
+                    //fileReader.close();
+                    file.close();
                     return dataArray;
                 }
-
+                
             }
+            file.close();
+            
 
-        } catch (FileNotFoundException e) {
+        } catch ( IOException e) {
             ;
         }
 
+        dataArray=new ArrayList<>();
         return dataArray;
         
 
