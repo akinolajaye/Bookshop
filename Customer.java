@@ -17,8 +17,7 @@ import user.User;
 
 public class Customer extends User {
 
-    private  Basket myBasket = new Basket();
-    private float totalPrice=0;
+    private  Basket myBasket = new Basket();//empty basket is created
 
     
 
@@ -29,22 +28,16 @@ public class Customer extends User {
     public static void main(String[] args) {
         
         Customer joe = new Customer("101");
-
+        System.out.println(joe.myBasket.getTotalPrice());
         joe.addItemToBasket("22334455");
-        joe.addItemToBasket("11224455");
+        
+        joe.addItemToBasket("22334455");
+        System.out.println(joe.myBasket.getTotalPrice());
         System.out.println(joe.myBasket.items);
-        System.out.println(joe.myBasket.items.get(1).title);
-        System.out.println(joe.myBasket.items.get(0).title);
+        //System.out.println(joe.myBasket.items.get(0).title);
+        //joe.updateActivityLog("Credit Card", "Purchased");
         joe.payForItems("Credit Card", "4756353625344", "465", "");
-        System.out.println(joe.findOne("ff", "ActivityLog.txt"));
-        joe.myBasket.updateStock("22446688","add");
         
-        
-       
-        
-
-        
-
         
     }
 
@@ -53,12 +46,10 @@ public class Customer extends User {
         List<String> item= findOne(id, "Stock.txt");//uses the find one function to get book via id
         
         Books newItem = new Books(item);//creates a class instance of the book found
-        myBasket.addToBasket(newItem);//calls the add to basket function
+        myBasket.addToBasket(newItem);//calls the add to basket function which books the book in a list of type Books(the class)
 
     
     }
-
-
 
     public void removeItemFromBasket(String id){
 
@@ -68,9 +59,9 @@ public class Customer extends User {
 
             if (remove.isbn.equals(id)){//checks if ids match
 
-                book=remove;
-                myBasket.removeFromBasket(book);
-                break;
+                book=remove;//stores the book class found in the variable
+                myBasket.removeFromBasket(book);//removes books from list
+                break;//closes for loop
 
             }
             
@@ -79,42 +70,28 @@ public class Customer extends User {
 
     }
 
-    public float totalPrice(){
-
-        this.totalPrice=0;
-        
-        
-
-        for (Books book : myBasket.items) {//foreach loop through basket.items
-
-            this.totalPrice+=book.retailPrice;
-        }
-
-        return totalPrice;
-
-    }
-
 
 
     public boolean payForItems(String payMethod,String cardNumber,String securityCode,String email){
 
         
-        float price=totalPrice();
+        float totalPrice=myBasket.getTotalPrice();// calls the basket function get total price
 
 
-        if (payMethod.equals("Credit Card")){
-            CreditCard payment =new CreditCard("Credit Card", price, cardNumber, securityCode);
-            payment.validKey();//add validation
+        if (payMethod.equals("Credit Card")){//if pay method chosen is a credit card
+            CreditCard payment =new CreditCard("Credit Card", totalPrice, cardNumber, securityCode);//creates credit card
+            payment.validKey();//validation to check credit card keys
             if (payment.paid){
-                myBasket.emptyBasket();
-                System.out.println(totalPrice);
+                updateActivityLog("Credit Card", "Purchased");//logs that the the books have been bought
+                myBasket.emptyBasket();//emptys basket
                 return true;
             }
 
         }else if(payMethod.equals("PayPal")){
-            PayPal payment = new PayPal("PayPal", price, email);
+            PayPal payment = new PayPal("PayPal", totalPrice, email);
             payment.validKey();
             if (payment.paid){
+                updateActivityLog("Paypal", "Purchased");
                 myBasket.emptyBasket();
                 return true;
             }
@@ -129,6 +106,7 @@ public class Customer extends User {
 
 
     public void updateActivityLog(String payMethod,String result){
+        /*code to format the current date into the specified format*/ 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDateTime now =LocalDateTime.now();
         String date = dtf.format(now);
@@ -140,7 +118,8 @@ public class Customer extends User {
 
             FileWriter log = new FileWriter("ActivityLog.txt",true);
             for (Books book  : myBasket.items) {
-                log.write(this.id+","+this.postcode +","+book.retailPrice+","+"quantity"+","+result +","+payMethod+","+date+"\n");
+                log.write(this.id+","+this.postcode +","+book.retailPrice+","+book.isbn+
+                ","+book.quantity+","+result +","+payMethod+","+date+"\n");//writes the log description into txt file
                 
             }
             
@@ -165,6 +144,7 @@ class Books{
 
     public Books(List<String> newBook){
 
+        /* stores the book details in variables as attributes */
         isbn=newBook.get(0);
         type=newBook.get(1);
         title=newBook.get(2);
@@ -185,11 +165,37 @@ class Books{
 class Basket{
 
 
-    public List<Books> items = new ArrayList<>();//basket is a list of the books class
+    public List<Books>  items = new ArrayList<>();//basket is a list of the books class
+
+    
 
     public void addToBasket(Books newItem){
+        boolean exists=false;
+
+        if (newItem.quantity >0){//checks if the quantity is more than zero i.e out of stock
+            
+            for (Books booksInBasket : items) {
+                if (booksInBasket.isbn.equals(newItem.isbn)){//performs a check if the book is already in the basket
+                    booksInBasket.quantity+=1;//adds quantity to the book in the basket instead
+                    updateStock(newItem.isbn, "remove");//updates stock by removing one
+                    exists=true;
+                    break;
+                }
+                
+            }
+            
+    
+            if (!exists){//if doersnt exist
+                updateStock(newItem.isbn, "remove");
+                newItem.quantity=1;//books quantity is set to 1
+                items.add(newItem);}//adds book instance to a list of books
+
+        }else{
+            System.out.println("out of stock");
+        }
         
-        items.add(newItem);//adds book instance to a list of books
+
+        
     }
 
     public void removeFromBasket(Books book){
@@ -199,57 +205,79 @@ class Basket{
         
     }
 
+    public float getTotalPrice(){
+
+        float totalPrice=0;
+        
+        
+
+        for (Books book : items) {//foreach loop through basket.items
+            for(int i=1;i<=book.quantity;i++){
+
+                totalPrice+=book.retailPrice;
+            }
+            
+        }
+
+        return totalPrice;
+
+    }
 
     public void emptyBasket(){
         items.clear();
     }
 
-    public void updateStock(String id,String choice){
+    private void updateStock(String id,String choice){
 
         String dataStr;// string variable to hold unformatted string after line is read
         List<String> dataArray=new ArrayList<>();// array variable to hold splitted string
         StringBuffer buff=new StringBuffer();
-        int found=0;
+        boolean found=false;
         int quantity;
+        String buffString;
 
         try {
            
             BufferedReader file = new BufferedReader(new FileReader("Stock.txt"));
-            while ((dataStr=file.readLine()) !=null) {
+            while ((dataStr=file.readLine()) !=null) {//reads each line and stores each line as a string in datastr
 
-                switch(found){
-                    case 0:
+                if(!found){
+                    
                         dataArray = Arrays.asList(dataStr.split("\\s*,\\s*"));//creates an array that splits the data by comma using regex
                         if (dataArray.get(0).equals(id)) {//checks if the id given as criteria is in the txt file
-                            String buffString;
-                            quantity=Integer.parseInt(dataArray.get(7)); 
+                            
+                            quantity=Integer.parseInt(dataArray.get(7));//converts quantity string to an int 
                             
         
-                            //code to convert array to string
+                            //either adds to quantity or removes depending on the choice
                             if (choice.equals("add")){
 
                                 quantity+=1;
                             }else if (choice.equals("remove")){
                                 quantity-=1;
                             }
+   
+                            dataArray.set(7,Integer.toString(quantity)); //sets it back to string and changes its value in the array
 
-                                    
-                            dataArray.set(7,Integer.toString(quantity));                            
+                            //code to convert array to string                           
                             buffString = dataArray.toString();
-                            buffString= buffString.replace("[", "").replace("]", "").replace(" ", "");
+                            buffString= buffString.replace("[", "").replace("]", "");
                             buff.append(buffString+"\n");
-                            found=1;
+                            found=true;
                             
                         }else{
-                            buff.append(dataStr+"\n");
+                            buff.append(dataStr+"\n");//adds the line to a string buffer
                         }
-                        break;
+                        
 
-                    case 1:
-                        buff.append(dataStr+"\n");
-                        break;
+                }else{
+                    buff.append(dataStr+"\n");
 
-                }
+                }   
+                        
+                        
+
+                
                
             }
             file.close();
@@ -291,7 +319,7 @@ abstract class Pay{
 
 class CreditCard extends Pay{
     private String cardNumber,securityCode;
-    private static final String CARD_NUM_REGEX="^[0-9]{13}$|^[0-9]{16}$";
+    private static final String CARD_NUM_REGEX="^[0-9]{6}$";
     
     private static final String SEC_CODE_REGEX="^[0-9]{3}$";
     
@@ -313,17 +341,10 @@ class CreditCard extends Pay{
         if (cardMatch.matches()&&secMatch.matches()){
             
             paid =true;
-            System.out.println("Valid Card number");
-
 
         }else{
-            System.out.println("invalid");
+            paid=false;
         }
-
-
-
-
-        
 
     }
     
