@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 import user.User;
 
-
+ 
 public class Customer extends User {
 
     private  Basket myBasket = new Basket();//empty basket is created
@@ -33,7 +33,7 @@ public class Customer extends User {
         
         joe.addItemToBasket("22334455");
         System.out.println(joe.myBasket.getTotalPrice());
-        System.out.println(joe.myBasket.items);
+        System.out.println(joe.myBasket.items.get(0));
         //System.out.println(joe.myBasket.items.get(0).title);
         //joe.updateActivityLog("Credit Card", "Purchased");
         joe.payForItems("Credit Card", "4756353625344", "465", "");
@@ -200,6 +200,7 @@ class Basket{
 
     public void removeFromBasket(Books book){
 
+        updateStock(book.isbn, "add");//updates stock by removing one
         items.remove(book);
 
     }
