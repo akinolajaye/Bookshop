@@ -202,7 +202,6 @@ class Basket{
 
         items.remove(book);
 
-        
     }
 
     public float getTotalPrice(){
