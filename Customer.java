@@ -12,8 +12,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+
 import user.User;
 
+// edit where and when items get removed from stock and when stock gets put back
  
 public class Customer extends User {
 
@@ -23,22 +26,6 @@ public class Customer extends User {
 
     public Customer(String id){
         super(id);
-    }
-
-    public static void main(String[] args) {
-        
-        Customer joe = new Customer("101");
-        System.out.println(joe.myBasket.getTotalPrice());
-        joe.addItemToBasket("22334455");
-        
-        joe.addItemToBasket("22334455");
-        System.out.println(joe.myBasket.getTotalPrice());
-        System.out.println(joe.myBasket.items.get(0));
-        //System.out.println(joe.myBasket.items.get(0).title);
-        //joe.updateActivityLog("Credit Card", "Purchased");
-        joe.payForItems("Credit Card", "4756353625344", "465", "");
-        
-        
     }
 
 
@@ -92,6 +79,7 @@ public class Customer extends User {
             payment.validKey();
             if (payment.paid){
                 updateActivityLog("Paypal", "Purchased");
+                
                 myBasket.emptyBasket();
                 return true;
             }
@@ -104,6 +92,13 @@ public class Customer extends User {
 
     }
 
+    public void cancelItems(String payMethod){
+
+         
+         updateActivityLog(payMethod, "Cancelled");
+         myBasket.cancelBasketStock();
+         myBasket.emptyBasket();
+    }
 
     public void updateActivityLog(String payMethod,String result){
         /*code to format the current date into the specified format*/ 
@@ -115,15 +110,24 @@ public class Customer extends User {
         
 
         try{
+            
 
             FileWriter log = new FileWriter("ActivityLog.txt",true);
-            for (Books book  : myBasket.items) {
-                log.write(this.id+","+this.postcode +","+book.retailPrice+","+book.isbn+
-                ","+book.quantity+","+result +","+payMethod+","+date+"\n");//writes the log description into txt file
+
+            if(!myBasket.items.isEmpty()){
+                for (Books book  : myBasket.items) {
+                    
+                    log.write(this.id+","+this.postcode +","+book.retailPrice*book.quantity+","+book.isbn+
+                    ","+book.quantity+","+result +","+payMethod+","+date+"\n");//writes the log description into txt file
+                    
+                }
                 
-            }
-            
             log.close();
+
+            }else{
+                System.out.println("empty");
+            }
+
 
 
         }catch(IOException e){
@@ -177,7 +181,7 @@ class Basket{
             for (Books booksInBasket : items) {
                 if (booksInBasket.isbn.equals(newItem.isbn)){//performs a check if the book is already in the basket
                     booksInBasket.quantity+=1;//adds quantity to the book in the basket instead
-                    updateStock(newItem.isbn, "remove");//updates stock by removing one
+                    updateStock(newItem.isbn, "remove",1);//updates stock by removing one
                     exists=true;
                     break;
                 }
@@ -186,7 +190,7 @@ class Basket{
             
     
             if (!exists){//if doersnt exist
-                updateStock(newItem.isbn, "remove");
+                updateStock(newItem.isbn, "remove",1);
                 newItem.quantity=1;//books quantity is set to 1
                 items.add(newItem);}//adds book instance to a list of books
 
@@ -200,7 +204,7 @@ class Basket{
 
     public void removeFromBasket(Books book){
 
-        updateStock(book.isbn, "add");//updates stock by removing one
+        updateStock(book.isbn, "add",1);//updates stock by removing one
         items.remove(book);
 
     }
@@ -224,10 +228,19 @@ class Basket{
     }
 
     public void emptyBasket(){
+
         items.clear();
     }
 
-    private void updateStock(String id,String choice){
+    public void cancelBasketStock(){
+        for (Books books : items) {
+            updateStock(books.isbn, "add",books.quantity);
+            
+        }
+
+    }
+
+    public void updateStock(String id,String choice,int amount){
 
         String dataStr;// string variable to hold unformatted string after line is read
         List<String> dataArray=new ArrayList<>();// array variable to hold splitted string
@@ -252,9 +265,9 @@ class Basket{
                             //either adds to quantity or removes depending on the choice
                             if (choice.equals("add")){
 
-                                quantity+=1;
+                                quantity+=amount;
                             }else if (choice.equals("remove")){
-                                quantity-=1;
+                                quantity-=amount;
                             }
    
                             dataArray.set(7,Integer.toString(quantity)); //sets it back to string and changes its value in the array

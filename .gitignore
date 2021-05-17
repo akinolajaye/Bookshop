@@ -1,1 +1,10 @@
 .DS_Store
+.json
+.vscode/settings.json
+/Admin.class
+/Basket.class
+/Books.class
+/CreditCard.class
+/Customer.class
+/Pay.class
+/PayPal.class
