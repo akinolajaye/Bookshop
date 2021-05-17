@@ -30,16 +30,16 @@ public class Customer extends User {
     }
 
 
-    public void addItemToBasket(String id){
+    public void addItemToBasket(String id,int amount){
         List<String> item= findOne(id, "Stock.txt");//uses the find one function to get book via id
         
         Books newItem = new Books(item);//creates a class instance of the book found
-        myBasket.addToBasket(newItem);//calls the add to basket function which books the book in a list of type Books(the class)
+        myBasket.addToBasket(newItem,amount);//calls the add to basket function which books the book in a list of type Books(the class)
 
     
     }
 
-    public void removeItemFromBasket(String id){
+    public void removeItemFromBasket(String id,int amount){
 
         Books book;
 
@@ -48,7 +48,7 @@ public class Customer extends User {
             if (remove.isbn.equals(id)){//checks if ids match
 
                 book=remove;//stores the book class found in the variable
-                myBasket.removeFromBasket(book);//removes books from list
+                myBasket.removeFromBasket(book,amount);//removes books from list
                 break;//closes for loop
 
             }
@@ -174,14 +174,14 @@ class Basket{
 
     
 
-    public void addToBasket(Books newItem){
+    public void addToBasket(Books newItem,int amount){
         boolean exists=false;
 
         if (newItem.quantity >0){//checks if the quantity is more than zero i.e out of stock
             
             for (Books booksInBasket : items) {
                 if (booksInBasket.isbn.equals(newItem.isbn)){//performs a check if the book is already in the basket
-                    booksInBasket.quantity+=1;//adds quantity to the book in the basket instead
+                    booksInBasket.quantity+=amount;//adds quantity to the book in the basket instead
                     updateStock(newItem.isbn, "remove",1);//updates stock by removing one
                     exists=true;
                     break;
@@ -191,7 +191,7 @@ class Basket{
             
     
             if (!exists){//if doersnt exist
-                updateStock(newItem.isbn, "remove",1);
+                updateStock(newItem.isbn, "remove",amount);
                 newItem.quantity=1;//books quantity is set to 1
                 items.add(newItem);}//adds book instance to a list of books
 
@@ -203,9 +203,9 @@ class Basket{
         
     }
 
-    public void removeFromBasket(Books book){
+    public void removeFromBasket(Books book,int amount){
 
-        updateStock(book.isbn, "add",1);//updates stock by removing one
+        updateStock(book.isbn, "add",amount);//updates stock by removing one
         items.remove(book);
 
     }
