@@ -21,7 +21,7 @@ import user.User;
  
 public class Customer extends User {
 
-    private  Basket myBasket = new Basket();//empty basket is created
+    public  Basket myBasket = new Basket();//empty basket is created
 
     
 

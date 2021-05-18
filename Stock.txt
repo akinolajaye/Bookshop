@@ -1,4 +1,4 @@
-11223344, paperback, A Promised Land, English, Biography, 17-11-2020, 17.5, 5, 768, new
+11223344, paperback, A Promised Land, English, Biography, 17-11-2020, 17.5, -1, 768, new
 11224455, audiobook, A Promised Land, English, Biography, 24-11-2020, 30.25, 10, 4.5, MP3
 12345678, paperback, Introduction to AI, French, Computer Science, 20-05-2019, 50.00, 8, 410, new
 22334455, paperback, Intelligent Investor, English, Business, 23-10-2015, 14.20, 9, 640, used

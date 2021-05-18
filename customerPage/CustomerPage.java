@@ -1,21 +1,30 @@
-package library;
+package customerPage;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import customer.Customer;
+
+
 import javax.swing.JScrollPane;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
 
-public class Library {
+public class CustomerPage {
 
 	private JFrame frame;
-	private JTable customerTable;
+
+	
 
 	/**
 	 * Launch the application.
@@ -24,7 +33,7 @@ public class Library {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Library window = new Library();
+					CustomerPage window = new CustomerPage();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +45,7 @@ public class Library {
 	/**
 	 * Create the application.
 	 */
-	public Library() {
+	public CustomerPage() {
 		initialize();
 	}
 
@@ -129,23 +138,8 @@ public class Library {
 		add2ComboBox.setBounds(141, 300, 182, 27);
 		frame.getContentPane().add(add2ComboBox);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(333, 30, 933, 312);
-		frame.getContentPane().add(scrollPane);
-		
-		customerTable = new JTable();
-		scrollPane.setViewportView(customerTable);
-		customerTable.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"ISBN", "Type", "Title", "Language", "Genre", "Release Date", "Retail Price",
-				"Quantity", "Additiona Info 1", "Additiona Info 2"
-			}
-		));
-		
 		JButton addButton = new JButton("Add To Basket");
-		addButton.setBounds(60, 413, 121, 36);
+		addButton.setBounds(8, 413, 121, 36);
 		frame.getContentPane().add(addButton);
 		
 		JButton removeButton = new JButton("Remove From Basket");
@@ -153,11 +147,11 @@ public class Library {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		removeButton.setBounds(212, 413, 167, 36);
+		removeButton.setBounds(157, 413, 167, 36);
 		frame.getContentPane().add(removeButton);
 		
 		JButton emptyBasketButton = new JButton("Empty Basket");
-		emptyBasketButton.setBounds(402, 413, 153, 36);
+		emptyBasketButton.setBounds(337, 413, 153, 36);
 		frame.getContentPane().add(emptyBasketButton);
 		
 		JButton payForItems = new JButton("Pay for Items");
@@ -165,23 +159,29 @@ public class Library {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		payForItems.setBounds(584, 413, 140, 36);
+		payForItems.setBounds(510, 413, 140, 36);
 		frame.getContentPane().add(payForItems);
 		
 		JButton viewAllButton = new JButton("View All");
 		viewAllButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+
 			}
+
 		});
-		viewAllButton.setBounds(927, 413, 111, 36);
+		viewAllButton.setBounds(815, 413, 111, 36);
 		frame.getContentPane().add(viewAllButton);
 		
 		JButton viewBasketButton = new JButton("View Basket");
 		viewBasketButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+
+
 			}
 		});
-		viewBasketButton.setBounds(1073, 413, 140, 36);
+		viewBasketButton.setBounds(953, 413, 140, 36);
 		frame.getContentPane().add(viewBasketButton);
 		
 		JButton searchButton = new JButton("Search Books");
@@ -189,7 +189,33 @@ public class Library {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		searchButton.setBounds(768, 413, 121, 36);
+		searchButton.setBounds(671, 413, 121, 36);
 		frame.getContentPane().add(searchButton);
+		
+		JButton exitButton = new JButton("Exit");
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame= new JFrame("Exit");
+				if (JOptionPane.showConfirmDialog(frame, "Confirm if you want to exit",
+						"Library System", JOptionPane.YES_NO_OPTION)== JOptionPane.YES_NO_OPTION) {
+					System.exit(0);
+				}
+			
+			}
+		});
+
+		
+
+		exitButton.setBounds(1119, 413, 89, 36);
+		frame.getContentPane().add(exitButton);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(446, 30, 347, 286);
+		frame.getContentPane().add(scrollPane);
+		
+		JList list = new JList();
+		scrollPane.setViewportView(list);
+
+
 	}
 }
