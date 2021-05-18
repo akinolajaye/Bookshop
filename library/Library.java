@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 public class Library {
 
 	private JFrame frame;
-	private JTable table;
+	private JTable customerTable;
 
 	/**
 	 * Launch the application.
@@ -49,93 +49,93 @@ public class Library {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("ISBN");
-		lblNewLabel.setBounds(18, 30, 61, 16);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel isbnLabel = new JLabel("ISBN");
+		isbnLabel.setBounds(18, 30, 61, 16);
+		frame.getContentPane().add(isbnLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Type");
-		lblNewLabel_1.setBounds(18, 60, 61, 16);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel typeLabel = new JLabel("Type");
+		typeLabel.setBounds(18, 60, 61, 16);
+		frame.getContentPane().add(typeLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("Title");
-		lblNewLabel_2.setBounds(18, 90, 61, 16);
-		frame.getContentPane().add(lblNewLabel_2);
+		JLabel titleLabel = new JLabel("Title");
+		titleLabel.setBounds(18, 90, 61, 16);
+		frame.getContentPane().add(titleLabel);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("Language");
-		lblNewLabel_2_1.setBounds(18, 120, 61, 16);
-		frame.getContentPane().add(lblNewLabel_2_1);
+		JLabel languageLabel = new JLabel("Language");
+		languageLabel.setBounds(18, 120, 61, 16);
+		frame.getContentPane().add(languageLabel);
 		
-		JLabel lblNewLabel_2_2 = new JLabel("Genre");
-		lblNewLabel_2_2.setBounds(18, 150, 61, 16);
-		frame.getContentPane().add(lblNewLabel_2_2);
+		JLabel genreLabel = new JLabel("Genre");
+		genreLabel.setBounds(18, 150, 61, 16);
+		frame.getContentPane().add(genreLabel);
 		
-		JLabel lblNewLabel_2_3 = new JLabel("Release Date");
-		lblNewLabel_2_3.setBounds(18, 180, 111, 16);
-		frame.getContentPane().add(lblNewLabel_2_3);
+		JLabel releaseDateLabel = new JLabel("Release Date");
+		releaseDateLabel.setBounds(18, 180, 111, 16);
+		frame.getContentPane().add(releaseDateLabel);
 		
-		JLabel lblNewLabel_2_4 = new JLabel("Retail Price");
-		lblNewLabel_2_4.setBounds(18, 210, 111, 16);
-		frame.getContentPane().add(lblNewLabel_2_4);
+		JLabel retailPriceLabel = new JLabel("Retail Price");
+		retailPriceLabel.setBounds(18, 210, 111, 16);
+		frame.getContentPane().add(retailPriceLabel);
 		
-		JLabel lblNewLabel_2_5 = new JLabel("Quantity");
-		lblNewLabel_2_5.setBounds(18, 240, 111, 16);
-		frame.getContentPane().add(lblNewLabel_2_5);
+		JLabel quantityLabel = new JLabel("Quantity");
+		quantityLabel.setBounds(18, 240, 111, 16);
+		frame.getContentPane().add(quantityLabel);
 		
-		JLabel lblNewLabel_2_6 = new JLabel("Addtional Info 1");
-		lblNewLabel_2_6.setBounds(18, 270, 111, 16);
-		frame.getContentPane().add(lblNewLabel_2_6);
+		JLabel add1Label = new JLabel("Addtional Info 1");
+		add1Label.setBounds(18, 270, 111, 16);
+		frame.getContentPane().add(add1Label);
 		
-		JLabel lblNewLabel_2_6_1 = new JLabel("Addtional Info 2");
-		lblNewLabel_2_6_1.setBounds(18, 300, 111, 16);
-		frame.getContentPane().add(lblNewLabel_2_6_1);
+		JLabel add2Label = new JLabel("Addtional Info 2");
+		add2Label.setBounds(18, 300, 111, 16);
+		frame.getContentPane().add(add2Label);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(143, 30, 180, 27);
-		frame.getContentPane().add(comboBox);
+		JComboBox isbnComboBox = new JComboBox();
+		isbnComboBox.setBounds(143, 30, 180, 27);
+		frame.getContentPane().add(isbnComboBox);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(143, 60, 180, 27);
-		frame.getContentPane().add(comboBox_1);
+		JComboBox typeComboBox = new JComboBox();
+		typeComboBox.setBounds(143, 60, 180, 27);
+		frame.getContentPane().add(typeComboBox);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(143, 90, 180, 27);
-		frame.getContentPane().add(comboBox_2);
+		JComboBox titleComboBox = new JComboBox();
+		titleComboBox.setBounds(143, 90, 180, 27);
+		frame.getContentPane().add(titleComboBox);
 		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(143, 120, 180, 27);
-		frame.getContentPane().add(comboBox_3);
+		JComboBox languageComboBox = new JComboBox();
+		languageComboBox.setBounds(143, 120, 180, 27);
+		frame.getContentPane().add(languageComboBox);
 		
-		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setBounds(143, 150, 180, 27);
-		frame.getContentPane().add(comboBox_4);
+		JComboBox genreComboBox = new JComboBox();
+		genreComboBox.setBounds(143, 150, 180, 27);
+		frame.getContentPane().add(genreComboBox);
 		
-		JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setBounds(141, 180, 182, 27);
-		frame.getContentPane().add(comboBox_5);
+		JComboBox releaseDateComboBox = new JComboBox();
+		releaseDateComboBox.setBounds(141, 180, 182, 27);
+		frame.getContentPane().add(releaseDateComboBox);
 		
-		JComboBox comboBox_6 = new JComboBox();
-		comboBox_6.setBounds(141, 210, 182, 27);
-		frame.getContentPane().add(comboBox_6);
+		JComboBox retailPriceComboBox = new JComboBox();
+		retailPriceComboBox.setBounds(141, 210, 182, 27);
+		frame.getContentPane().add(retailPriceComboBox);
 		
-		JComboBox comboBox_7 = new JComboBox();
-		comboBox_7.setBounds(141, 240, 182, 27);
-		frame.getContentPane().add(comboBox_7);
+		JComboBox quantityComboBox = new JComboBox();
+		quantityComboBox.setBounds(141, 240, 182, 27);
+		frame.getContentPane().add(quantityComboBox);
 		
-		JComboBox comboBox_8 = new JComboBox();
-		comboBox_8.setBounds(141, 270, 182, 27);
-		frame.getContentPane().add(comboBox_8);
+		JComboBox add1ComboBox = new JComboBox();
+		add1ComboBox.setBounds(141, 270, 182, 27);
+		frame.getContentPane().add(add1ComboBox);
 		
-		JComboBox comboBox_9 = new JComboBox();
-		comboBox_9.setBounds(141, 300, 182, 27);
-		frame.getContentPane().add(comboBox_9);
+		JComboBox add2ComboBox = new JComboBox();
+		add2ComboBox.setBounds(141, 300, 182, 27);
+		frame.getContentPane().add(add2ComboBox);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(333, 30, 933, 312);
 		frame.getContentPane().add(scrollPane);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		table.setModel(new DefaultTableModel(
+		customerTable = new JTable();
+		scrollPane.setViewportView(customerTable);
+		customerTable.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
@@ -144,44 +144,52 @@ public class Library {
 			}
 		));
 		
-		JButton btnNewButton = new JButton("Add To Basket");
-		btnNewButton.setBounds(60, 426, 121, 23);
-		frame.getContentPane().add(btnNewButton);
+		JButton addButton = new JButton("Add To Basket");
+		addButton.setBounds(60, 413, 121, 36);
+		frame.getContentPane().add(addButton);
 		
-		JButton btnNewButton_1 = new JButton("Remove From Basket");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton removeButton = new JButton("Remove From Basket");
+		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1.setBounds(191, 426, 167, 23);
-		frame.getContentPane().add(btnNewButton_1);
+		removeButton.setBounds(212, 413, 167, 36);
+		frame.getContentPane().add(removeButton);
 		
-		JButton btnNewButton_2 = new JButton("Empty Basket");
-		btnNewButton_2.setBounds(367, 426, 153, 23);
-		frame.getContentPane().add(btnNewButton_2);
+		JButton emptyBasketButton = new JButton("Empty Basket");
+		emptyBasketButton.setBounds(402, 413, 153, 36);
+		frame.getContentPane().add(emptyBasketButton);
 		
-		JButton btnNewButton_3 = new JButton("Pay for Items");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton payForItems = new JButton("Pay for Items");
+		payForItems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_3.setBounds(530, 426, 140, 23);
-		frame.getContentPane().add(btnNewButton_3);
+		payForItems.setBounds(584, 413, 140, 36);
+		frame.getContentPane().add(payForItems);
 		
-		JButton btnNewButton_4 = new JButton("View All");
-		btnNewButton_4.addActionListener(new ActionListener() {
+		JButton viewAllButton = new JButton("View All");
+		viewAllButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_4.setBounds(857, 426, 89, 23);
-		frame.getContentPane().add(btnNewButton_4);
+		viewAllButton.setBounds(927, 413, 111, 36);
+		frame.getContentPane().add(viewAllButton);
 		
-		JButton btnNewButton_5 = new JButton("View Basket");
-		btnNewButton_5.setBounds(980, 426, 140, 23);
-		frame.getContentPane().add(btnNewButton_5);
+		JButton viewBasketButton = new JButton("View Basket");
+		viewBasketButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		viewBasketButton.setBounds(1073, 413, 140, 36);
+		frame.getContentPane().add(viewBasketButton);
 		
-		JButton btnNewButton_6 = new JButton("Search Books");
-		btnNewButton_6.setBounds(700, 426, 121, 23);
-		frame.getContentPane().add(btnNewButton_6);
+		JButton searchButton = new JButton("Search Books");
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		searchButton.setBounds(768, 413, 121, 36);
+		frame.getContentPane().add(searchButton);
 	}
 }
