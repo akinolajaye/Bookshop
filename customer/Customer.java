@@ -59,6 +59,12 @@ public class Customer extends User {
     }
 
 
+    public List<List<String>> returnBasket(){
+        
+        return myBasket.getBasket();
+    }
+
+
 
     public boolean payForItems(String payMethod,String cardNumber,String securityCode,String email){
 
@@ -182,7 +188,7 @@ class Basket{
             for (Books booksInBasket : items) {
                 if (booksInBasket.isbn.equals(newItem.isbn)){//performs a check if the book is already in the basket
                     booksInBasket.quantity+=amount;//adds quantity to the book in the basket instead
-                    updateStock(newItem.isbn, "remove",1);//updates stock by removing one
+                    updateStock(newItem.isbn, "remove",amount);//updates stock by removing one
                     exists=true;
                     break;
                 }
@@ -241,6 +247,40 @@ class Basket{
 
     }
 
+    public List<List<String>> getBasket(){
+
+        List<List<String>> basket = new ArrayList<>();
+
+       // List <String> basketItems= new ArrayList<>();
+
+        for (Books i : items) {
+            
+
+            List <String> basketItems= new ArrayList<>();
+            basketItems.add(i.isbn);
+            basketItems.add(i.type);
+            basketItems.add(i.title);
+            basketItems.add(i.lang);
+            basketItems.add(i.genre);
+            basketItems.add(i.releaseDate);
+            basketItems.add(Float.toString( i.retailPrice));
+            basketItems.add(Integer.toString(i.quantity));
+            basketItems.add(i.add1);
+            basketItems.add(i.add2);
+            basket.add(basketItems);
+
+            
+
+
+
+        }
+
+
+      
+
+        return basket;
+    }
+    
     public void updateStock(String id,String choice,int amount){
 
         String dataStr;// string variable to hold unformatted string after line is read

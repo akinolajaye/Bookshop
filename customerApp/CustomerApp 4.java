@@ -120,33 +120,16 @@ public class CustomerApp extends JFrame {
 
 		
 		JComboBox quantityComboBox = new JComboBox();
-
-
-		
-
 		quantityComboBox.setBounds(141, 240, 182, 27);
 		contentPane.add(quantityComboBox);
 		
 		JButton addButton = new JButton("Add To Basket");
-		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				customer.addItemToBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));
-
-				
-
-			}
-		});
-
 		addButton.setBounds(8, 413, 121, 36);
 		contentPane.add(addButton);
 		
 		JButton removeButton = new JButton("Remove From Basket");
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-
-
 			}
 		});
 		removeButton.setBounds(157, 413, 167, 36);
@@ -176,8 +159,6 @@ public class CustomerApp extends JFrame {
 					allBooksArray.add(allBooksList.get(i).toString().replace("[", "").replace("]", ""));
 				}	
 
-				
-
 				DefaultListModel model = new DefaultListModel<>();
 
 				for (String i : allBooksArray) {
@@ -199,30 +180,7 @@ public class CustomerApp extends JFrame {
 		viewBasketButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				
-				List <List<String>> basketList =customer.returnBasket();
-				List<String> basketArray =new ArrayList<>();
-				
-		
-				for (int i =0; i<basketList.size();i++){
-					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));
-	
-					
-				}	
 
-				
-			
-
-				DefaultListModel model = new DefaultListModel<>();
-
-				for (String i : basketArray) {
-
-					model.addElement(i);
-					
-					
-				}
-				displayBox.setModel(model);
-		
 
 
 
@@ -234,65 +192,6 @@ public class CustomerApp extends JFrame {
 		JButton searchButton = new JButton("Search Books");
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List <List<String>> searchList;
-				List<String> searchArray = new ArrayList<>();
-				List<String> searchReturn = new ArrayList<>();
-
-
-				if(!isbnTextField.getText().equalsIgnoreCase("")){
-					searchArray.add(isbnTextField.getText());
-				}
-				if(!isbnTextField.getText().equalsIgnoreCase("")){
-					searchArray.add(isbnTextField.getText());
-				}
-				if(!typeTextField.getText().equalsIgnoreCase("")){
-					searchArray.add(typeTextField.getText());
-				}
-				if(!titleTextField.getText().equalsIgnoreCase("")){
-					searchArray.add(titleTextField.getText());
-				}
-				if(!langTextField.getText().equalsIgnoreCase("")){
-					searchArray.add(langTextField.getText());
-				}
-
-				if(!genreTextField.getText().equalsIgnoreCase("")){
-					searchArray.add(genreTextField.getText());
-				}
-				if(!releaseDateTextField.getText().equalsIgnoreCase("")){
-					searchArray.add(releaseDateTextField.getText());
-				}
-
-				if(!retailPriceTextField.getText().equalsIgnoreCase("")){
-					searchArray.add(retailPriceTextField.getText());
-				}
-
-				if(!add1TextField.getText().equalsIgnoreCase("")){
-					searchArray.add(add1TextField.getText());
-				}
-
-				if(!add2TextField.getText().equalsIgnoreCase("")){
-					searchArray.add(add2TextField.getText());
-				}
-
-				searchList=customer.searchBooks("Stock.txt", searchArray);
-
-
-				for (int i =0; i<searchList.size();i++){
-					searchReturn.add(searchList.get(i).toString().replace("[", "").replace("]", ""));
-				}	
-
-				DefaultListModel model = new DefaultListModel<>();
-
-				for (String i : searchReturn) {
-
-					model.addElement(i);
-					
-				}
-				displayBox.setModel(model);
-	
-
-
-
 			}
 		});
 		searchButton.setBounds(671, 413, 121, 36);
@@ -321,49 +220,16 @@ public class CustomerApp extends JFrame {
 		
 		displayBox = new JList();
 		displayBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		
 		displayBox.addListSelectionListener(new ListSelectionListener(){
 			
-			public void valueChanged (ListSelectionEvent event){
+			public void valueChanged(ListSelectionEvent event){
 
-				try{
-					if (!event.getValueIsAdjusting()) {
-						quantityComboBox.removeAllItems();
-						List<String> listArray;
-						
-						listArray=Arrays.asList(displayBox.getSelectedValue().toString().split("\\s*,\\s*"));	
-								
-						isbnTextField.setText(listArray.get(0));
-						typeTextField.setText(listArray.get(1));
-						titleTextField.setText(listArray.get(2));
-						langTextField.setText(listArray.get(3));
-						genreTextField.setText(listArray.get(4));
-						releaseDateTextField.setText(listArray.get(5));
-						retailPriceTextField.setText(listArray.get(6));
-						add1TextField.setText(listArray.get(8));
-						add2TextField.setText(listArray.get(9));
-
-						
-						int quant=Integer.parseInt( customer.findOne(listArray.get(0), "Stock.txt").get(7));
-						
-						MutableComboBoxModel model = (MutableComboBoxModel) quantityComboBox.getModel() ;
-						for(int i=1;i<=quant;i++){
-							//System.out.println(i);
-							model.addElement(i);
-
-						}
-
-						
-						
-			
-					}
-				}catch(NullPointerException e){
-					
-				}
+				List<String> listArray;
 				
+				listArray=Arrays.asList(displayBox.getSelectedValue().toString().split("\\s*,\\s*"));	
+						
+				isbnTextField.setText(listArray.get(0));	
 			}
-		
 		});
 
 		scrollPane.setViewportView(displayBox);
