@@ -18,7 +18,7 @@ public class User {
     protected String regex ="\\s*,\\s*";//defines a regex that removes commas and trailing white space
 
     /* creates the attributes for the user */
-    protected User(String id) {
+    public User(String id) {
 
         this.filename="UserAccounts.txt";
         
@@ -34,7 +34,9 @@ public class User {
 
         
     }
-
+    public User(){
+        
+    }
 
 
     public List<String> findOne(String id,String filename){

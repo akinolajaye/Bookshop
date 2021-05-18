@@ -1,40 +1,42 @@
-package customerPage;
+package customerApp;
+
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 
 import customer.Customer;
 
-
-import javax.swing.JScrollPane;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
-public class CustomerPage {
+public class CustomerApp extends JFrame {
 
-	private JFrame frame;
-
-	
+	private JPanel contentPane;
+	private JList displayBox;
+	private String customerID;
 
 	/**
+	 * 
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CustomerPage window = new CustomerPage();
-					window.frame.setVisible(true);
+					CustomerApp frame = new CustomerApp();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,104 +45,103 @@ public class CustomerPage {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
-	public CustomerPage() {
-		initialize();
-	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(0, 0,1306 , 553);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+	public CustomerApp(){}
+	public CustomerApp(String id) {
+		customerID=id;
+		Customer customer=new Customer(customerID);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(0, 0,1306 , 553);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
 		JLabel isbnLabel = new JLabel("ISBN");
 		isbnLabel.setBounds(18, 30, 61, 16);
-		frame.getContentPane().add(isbnLabel);
+		contentPane.add(isbnLabel);
 		
 		JLabel typeLabel = new JLabel("Type");
 		typeLabel.setBounds(18, 60, 61, 16);
-		frame.getContentPane().add(typeLabel);
+		contentPane.add(typeLabel);
 		
 		JLabel titleLabel = new JLabel("Title");
 		titleLabel.setBounds(18, 90, 61, 16);
-		frame.getContentPane().add(titleLabel);
+		contentPane.add(titleLabel);
 		
 		JLabel languageLabel = new JLabel("Language");
 		languageLabel.setBounds(18, 120, 61, 16);
-		frame.getContentPane().add(languageLabel);
+		contentPane.add(languageLabel);
 		
 		JLabel genreLabel = new JLabel("Genre");
 		genreLabel.setBounds(18, 150, 61, 16);
-		frame.getContentPane().add(genreLabel);
+		contentPane.add(genreLabel);
 		
 		JLabel releaseDateLabel = new JLabel("Release Date");
 		releaseDateLabel.setBounds(18, 180, 111, 16);
-		frame.getContentPane().add(releaseDateLabel);
+		contentPane.add(releaseDateLabel);
 		
 		JLabel retailPriceLabel = new JLabel("Retail Price");
 		retailPriceLabel.setBounds(18, 210, 111, 16);
-		frame.getContentPane().add(retailPriceLabel);
+		contentPane.add(retailPriceLabel);
 		
 		JLabel quantityLabel = new JLabel("Quantity");
 		quantityLabel.setBounds(18, 240, 111, 16);
-		frame.getContentPane().add(quantityLabel);
+		contentPane.add(quantityLabel);
 		
 		JLabel add1Label = new JLabel("Addtional Info 1");
 		add1Label.setBounds(18, 270, 111, 16);
-		frame.getContentPane().add(add1Label);
+		contentPane.add(add1Label);
 		
 		JLabel add2Label = new JLabel("Addtional Info 2");
 		add2Label.setBounds(18, 300, 111, 16);
-		frame.getContentPane().add(add2Label);
+		contentPane.add(add2Label);
 		
 		JComboBox isbnComboBox = new JComboBox();
 		isbnComboBox.setBounds(143, 30, 180, 27);
-		frame.getContentPane().add(isbnComboBox);
+		contentPane.add(isbnComboBox);
 		
 		JComboBox typeComboBox = new JComboBox();
 		typeComboBox.setBounds(143, 60, 180, 27);
-		frame.getContentPane().add(typeComboBox);
+		contentPane.add(typeComboBox);
 		
 		JComboBox titleComboBox = new JComboBox();
 		titleComboBox.setBounds(143, 90, 180, 27);
-		frame.getContentPane().add(titleComboBox);
+		contentPane.add(titleComboBox);
 		
 		JComboBox languageComboBox = new JComboBox();
 		languageComboBox.setBounds(143, 120, 180, 27);
-		frame.getContentPane().add(languageComboBox);
+		contentPane.add(languageComboBox);
 		
 		JComboBox genreComboBox = new JComboBox();
 		genreComboBox.setBounds(143, 150, 180, 27);
-		frame.getContentPane().add(genreComboBox);
+		contentPane.add(genreComboBox);
 		
 		JComboBox releaseDateComboBox = new JComboBox();
 		releaseDateComboBox.setBounds(141, 180, 182, 27);
-		frame.getContentPane().add(releaseDateComboBox);
+		contentPane.add(releaseDateComboBox);
 		
 		JComboBox retailPriceComboBox = new JComboBox();
 		retailPriceComboBox.setBounds(141, 210, 182, 27);
-		frame.getContentPane().add(retailPriceComboBox);
+		contentPane.add(retailPriceComboBox);
 		
 		JComboBox quantityComboBox = new JComboBox();
 		quantityComboBox.setBounds(141, 240, 182, 27);
-		frame.getContentPane().add(quantityComboBox);
+		contentPane.add(quantityComboBox);
 		
 		JComboBox add1ComboBox = new JComboBox();
 		add1ComboBox.setBounds(141, 270, 182, 27);
-		frame.getContentPane().add(add1ComboBox);
+		contentPane.add(add1ComboBox);
 		
 		JComboBox add2ComboBox = new JComboBox();
 		add2ComboBox.setBounds(141, 300, 182, 27);
-		frame.getContentPane().add(add2ComboBox);
+		contentPane.add(add2ComboBox);
 		
 		JButton addButton = new JButton("Add To Basket");
 		addButton.setBounds(8, 413, 121, 36);
-		frame.getContentPane().add(addButton);
+		contentPane.add(addButton);
 		
 		JButton removeButton = new JButton("Remove From Basket");
 		removeButton.addActionListener(new ActionListener() {
@@ -148,11 +149,11 @@ public class CustomerPage {
 			}
 		});
 		removeButton.setBounds(157, 413, 167, 36);
-		frame.getContentPane().add(removeButton);
+		contentPane.add(removeButton);
 		
 		JButton emptyBasketButton = new JButton("Empty Basket");
 		emptyBasketButton.setBounds(337, 413, 153, 36);
-		frame.getContentPane().add(emptyBasketButton);
+		contentPane.add(emptyBasketButton);
 		
 		JButton payForItems = new JButton("Pay for Items");
 		payForItems.addActionListener(new ActionListener() {
@@ -160,18 +161,29 @@ public class CustomerPage {
 			}
 		});
 		payForItems.setBounds(510, 413, 140, 36);
-		frame.getContentPane().add(payForItems);
+		contentPane.add(payForItems);
 		
 		JButton viewAllButton = new JButton("View All");
 		viewAllButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				List <List<String>> allBooksList =customer.findAll("Stock.txt");
+				List<String> allBooksArray =new ArrayList<>();
+		
+				for (int i =0; i<allBooksList.size();i++){
+					allBooksArray.add(allBooksList.get(i).toString().replace("[", "").replace("]", ""));
+				}	
+
+				System.out.println("x");
+				System.out.println(allBooksArray.toString());
+
+				displayBox=new JList(allBooksArray.toArray());
 
 			}
 
 		});
 		viewAllButton.setBounds(815, 413, 111, 36);
-		frame.getContentPane().add(viewAllButton);
+		contentPane.add(viewAllButton);
 		
 		JButton viewBasketButton = new JButton("View Basket");
 		viewBasketButton.addActionListener(new ActionListener() {
@@ -179,10 +191,12 @@ public class CustomerPage {
 
 
 
+
+
 			}
 		});
 		viewBasketButton.setBounds(953, 413, 140, 36);
-		frame.getContentPane().add(viewBasketButton);
+		contentPane.add(viewBasketButton);
 		
 		JButton searchButton = new JButton("Search Books");
 		searchButton.addActionListener(new ActionListener() {
@@ -190,13 +204,13 @@ public class CustomerPage {
 			}
 		});
 		searchButton.setBounds(671, 413, 121, 36);
-		frame.getContentPane().add(searchButton);
+		contentPane.add(searchButton);
 		
 		JButton exitButton = new JButton("Exit");
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame= new JFrame("Exit");
-				if (JOptionPane.showConfirmDialog(frame, "Confirm if you want to exit",
+				
+				if (JOptionPane.showConfirmDialog(contentPane, "Confirm if you want to exit",
 						"Library System", JOptionPane.YES_NO_OPTION)== JOptionPane.YES_NO_OPTION) {
 					System.exit(0);
 				}
@@ -207,15 +221,15 @@ public class CustomerPage {
 		
 
 		exitButton.setBounds(1119, 413, 89, 36);
-		frame.getContentPane().add(exitButton);
+		contentPane.add(exitButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(446, 30, 347, 286);
-		frame.getContentPane().add(scrollPane);
+		contentPane.add(scrollPane);
 		
-		JList list = new JList();
-		scrollPane.setViewportView(list);
-
+		displayBox = new JList();
+		displayBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(displayBox);
 
 	}
 }
