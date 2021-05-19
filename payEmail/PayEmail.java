@@ -101,12 +101,14 @@ public class PayEmail extends JFrame {
 		JButton payButton = new JButton("Pay");
 		payButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				float price = customer.getPrice();
+
 
 				
 				boolean pay= customer.payForItems(payMethod, "","",emailTextField.getText());
 				if(pay){
 
-					JOptionPane.showMessageDialog(contentPane, "£ "+customer.getPrice()+" paid using PayPal");
+					JOptionPane.showMessageDialog(contentPane, "£ "+price+" paid using PayPal");
 					login.setVisible(true);
 					PayEmail.this.setVisible(false);
 					

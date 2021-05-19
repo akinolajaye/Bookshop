@@ -124,36 +124,43 @@ public class Customer extends User {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDateTime now =LocalDateTime.now();
         String date = dtf.format(now);
+        String dataStr;// string variable to hold unformatted string after line is read
+        StringBuffer buff=new StringBuffer();
 
 
-        
-
-        try{
-            
-
-            FileWriter log = new FileWriter("ActivityLog.txt",true);
+        try {
+            InputStream is= this.getClass().getClassLoader().getResourceAsStream("ActivityLog.txt");
+            BufferedReader file = new BufferedReader(new InputStreamReader(is));
 
             if(!myBasket.items.isEmpty()){
                 for (Books book  : myBasket.items) {
                     
-                    log.write(this.id+","+this.postcode +","+book.retailPrice*book.quantity+","+book.isbn+
-                    ","+book.quantity+","+result +","+payMethod+","+date+"\n");//writes the log description into txt file
+                    buff.append(this.id+","+this.postcode +","+book.retailPrice*book.quantity+","+book.isbn+
+                    ","+book.quantity+","+result +","+payMethod+","+date+"\n");//writes the log description into the buffer
                     
                 }
-                
-            log.close();
 
-            }else{
-                System.out.println("empty");
             }
-
-
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+                
+           
+            while ((dataStr=file.readLine()) !=null) {//reads each line and stores each line as a string in datastr
 
         
+                    buff.append(dataStr+"\n");
+
+            }
+            
+
+            FileWriter stockFile = new FileWriter("ActivityLog.txt");
+            stockFile.write(buff.toString());
+            stockFile.close();
+            
+
+        } catch ( IOException e) {
+            ;
+        }
+
+               
 
 
     } 
@@ -359,7 +366,7 @@ class Basket{
                 
                
             }
-            file.close();
+            
 
             FileWriter stockFile = new FileWriter("Stock.txt");
             stockFile.write(buff.toString());

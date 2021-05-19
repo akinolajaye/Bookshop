@@ -107,12 +107,12 @@ public class PayCard extends JFrame {
 		JButton payButton = new JButton("Pay");
 		payButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				float price = customer.getPrice();
 				
 				boolean pay= customer.payForItems(payMethod, cardNumTextField.getText(), codeTextField.getText(),"");
 				if(pay){
 
-					JOptionPane.showMessageDialog(contentPane,  "£ "+customer.getPrice()+" paid using Credit Card");
+					JOptionPane.showMessageDialog(contentPane,  "£ "+price+" paid using Credit Card");
 					login.setVisible(true);
 					PayCard.this.setVisible(false);
 					
