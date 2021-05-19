@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.SwingConstants;
+
+import adminApp.AdminApp;
 import customer.Customer;
 import user.User;
 import java.awt.event.ActionListener;
@@ -74,6 +76,13 @@ public class LoginPage {
 					CustomerApp create =new CustomerApp(listArray.get(0),frame);
 					create.setVisible(true);
 					frame.setVisible(false);
+
+				}else if (listArray.get(6).equalsIgnoreCase("admin")){
+					
+					AdminApp create =new AdminApp(listArray.get(0),frame);
+					create.setVisible(true);
+					frame.setVisible(false);
+
 				}
 	
 

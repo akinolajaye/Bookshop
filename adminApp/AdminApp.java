@@ -69,7 +69,7 @@ public class AdminApp extends JFrame {
 
 	public AdminApp(){}
 	
-	public AdminApp(String id,JFrame login ) {
+	public AdminApp(String id,JFrame login) {
 		adminID=id;
 		Admin admin=new Admin(adminID);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -143,8 +143,9 @@ public class AdminApp extends JFrame {
 				newBook.add(langTextField.getText());
 				newBook.add(genreTextField.getText());
 				newBook.add(releaseDateTextField.getText());
-				newBook.add(quantityComboBox.getSelectedItem().toString());
 				newBook.add(retailPriceLabel.getText());
+				newBook.add(quantityComboBox.getSelectedItem().toString());
+				
 				newBook.add(add1TextField.getText());
 				newBook.add(add2TextField.getText());
 				admin.addNewBook(newBook);
@@ -188,48 +189,6 @@ public class AdminApp extends JFrame {
 
 		addButton.setBounds(8, 413, 121, 36);
 		contentPane.add(addButton);
-		
-		JButton removeButton = new JButton("Remove From Basket");
-		removeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				admin.removeItemFromBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));
-				
-				List <List<String>> basketList =admin.returnBasket();
-				List<String> basketArray =new ArrayList<>();
-				
-		
-				for (int i =0; i<basketList.size();i++){
-					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));
-	
-					
-				}	
-
-				DefaultListModel model = new DefaultListModel<>();
-
-				for (String i : basketArray) {
-
-					model.addElement(i);
-					
-					
-				}
-				displayBox.setModel(model);
-				isbnTextField.setText(null);
-				typeTextField.setText(null);
-				titleTextField.setText(null);
-				langTextField.setText(null);
-				genreTextField.setText(null);
-				releaseDateTextField.setText(null);
-				retailPriceTextField.setText(null);
-				add1TextField.setText(null);
-				add2TextField.setText(null);
-				quantityComboBox.removeAllItems();
-
-
-			}
-		});
-		removeButton.setBounds(157, 413, 167, 36);
-		contentPane.add(removeButton);
 
 
 
@@ -273,7 +232,7 @@ public class AdminApp extends JFrame {
 			}
 
 		});
-		viewAllButton.setBounds(565, 413, 111, 36);
+		viewAllButton.setBounds(372, 413, 111, 36);
 		contentPane.add(viewAllButton);
 		
 		JButton searchButton = new JButton("Search Books");
@@ -351,7 +310,7 @@ public class AdminApp extends JFrame {
 
 			}
 		});
-		searchButton.setBounds(384, 413, 121, 36);
+		searchButton.setBounds(186, 413, 121, 36);
 		contentPane.add(searchButton);
 
 		JButton clearButton = new JButton("Clear Entries");
@@ -377,7 +336,7 @@ public class AdminApp extends JFrame {
 
 			}
 		});
-		clearButton.setBounds(720, 413, 140, 36);
+		clearButton.setBounds(531, 413, 140, 36);
 		contentPane.add(clearButton);
 		
 		JButton exitButton = new JButton("Exit");
@@ -394,7 +353,7 @@ public class AdminApp extends JFrame {
 
 		
 
-		exitButton.setBounds(903, 413, 105, 36);
+		exitButton.setBounds(727, 413, 105, 36);
 		contentPane.add(exitButton);
 		
 		JScrollPane scrollPane = new JScrollPane();

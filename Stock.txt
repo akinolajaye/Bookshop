@@ -13,3 +13,4 @@
 44335566, paperback, Cyber Security, English, Computer Science, 10-10-2020, 10.99, 2, 256, new
 44556688, ebook, Cyber Security, English, Computer Science, 10-10-2020, 10.10, 5, 256, EPUB
 44556677, audiobook, Deep Work, French, Business, 05-01-2016, 8.55, 2, 4.0, MP3
+44223312,Type,The Happy Health Plan,English,Medicine,10-12-2020,Retail Price,1,288,used
