@@ -1,4 +1,4 @@
-package customerApp;
+package adminApp;
 
 
 import java.awt.EventQueue;
@@ -18,7 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import payEmail.PayEmail;
-import customer.Customer;
+import admin.Admin;
 
 import payCard.PayCard;
 import javax.swing.JList;
@@ -31,11 +31,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 
-public class CustomerApp extends JFrame {
+public class AdminApp extends JFrame {
 
 	private JPanel contentPane;
 	private JList displayBox;
-	private String customerID;
+	private String adminID;
 	private JTextField typeTextField;
 	private JTextField titleTextField;
 	private JTextField langTextField;
@@ -54,7 +54,7 @@ public class CustomerApp extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CustomerApp frame = new CustomerApp();
+					AdminApp frame = new AdminApp();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,18 +67,18 @@ public class CustomerApp extends JFrame {
 	 * Create the frame.
 	 */
 
-	public CustomerApp(){}
+	public AdminApp(){}
 	
-	public CustomerApp(String id,JFrame login ) {
-		customerID=id;
-		Customer customer=new Customer(customerID);
+	public AdminApp(String id,JFrame login ) {
+		adminID=id;
+		Admin admin=new Admin(adminID);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0,1446 , 553);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		System.out.println(CustomerApp.this.getClass());
+		
 		
 		JLabel isbnLabel = new JLabel("ISBN");
 		isbnLabel.setBounds(18, 30, 61, 16);
@@ -129,34 +129,46 @@ public class CustomerApp extends JFrame {
 		quantityComboBox.setBounds(141, 240, 182, 27);
 		contentPane.add(quantityComboBox);
 		
-		JButton addButton = new JButton("Add To Basket");
+		JButton addButton = new JButton("Add Book");
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				customer.addItemToBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));
+				
+				
+				List<String> newBook = new ArrayList<>();
 
-				List <List<String>> basketList =customer.returnBasket();
-				List<String> basketArray =new ArrayList<>();
+				newBook.add(isbnTextField.getText());
+				newBook.add(typeLabel.getText());
+				newBook.add(titleTextField.getText());
+				newBook.add(langTextField.getText());
+				newBook.add(genreTextField.getText());
+				newBook.add(releaseDateTextField.getText());
+				newBook.add(quantityComboBox.getSelectedItem().toString());
+				newBook.add(retailPriceLabel.getText());
+				newBook.add(add1TextField.getText());
+				newBook.add(add2TextField.getText());
+				admin.addNewBook(newBook);
+	
+				List <List<String>> allBooksList =admin.findAll("Stock.txt");
+				List<String> allBooksArray =new ArrayList<>();
 				
 		
-				for (int i =0; i<basketList.size();i++){
-					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));
-	
-					
+				for (int i =0; i<allBooksList.size();i++){
+					allBooksArray.add(allBooksList.get(i).toString().replace("[", "").replace("]", ""));
 				}	
 
 				
-			
 
 				DefaultListModel model = new DefaultListModel<>();
 
-				for (String i : basketArray) {
+				for (String i : allBooksArray) {
 
 					model.addElement(i);
 					
-					
 				}
 				displayBox.setModel(model);
+
+
 
 				
 				isbnTextField.setText(null);
@@ -181,9 +193,9 @@ public class CustomerApp extends JFrame {
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				customer.removeItemFromBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));
+				admin.removeItemFromBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));
 				
-				List <List<String>> basketList =customer.returnBasket();
+				List <List<String>> basketList =admin.returnBasket();
 				List<String> basketArray =new ArrayList<>();
 				
 		
@@ -218,81 +230,6 @@ public class CustomerApp extends JFrame {
 		});
 		removeButton.setBounds(157, 413, 167, 36);
 		contentPane.add(removeButton);
-		
-		JButton emptyBasketButton = new JButton("Empty Basket");
-
-		emptyBasketButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				customer.emptyItemsFromBasket();
-				
-				List <List<String>> basketList =customer.returnBasket();
-				List<String> basketArray =new ArrayList<>();
-				
-		
-				for (int i =0; i<basketList.size();i++){
-					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));
-	
-					
-				}	
-
-				DefaultListModel model = new DefaultListModel<>();
-
-				for (String i : basketArray) {
-
-					model.addElement(i);
-					
-					
-				}
-				displayBox.setModel(model);	
-				isbnTextField.setText(null);
-				typeTextField.setText(null);
-				titleTextField.setText(null);
-				langTextField.setText(null);
-				genreTextField.setText(null);
-				releaseDateTextField.setText(null);
-				retailPriceTextField.setText(null);
-				add1TextField.setText(null);
-				add2TextField.setText(null);	
-				quantityComboBox.removeAllItems();		
-
-
-
-			}
-		});
-
-		emptyBasketButton.setBounds(337, 413, 153, 36);
-		contentPane.add(emptyBasketButton);
-
-
-		
-		JButton payForItems = new JButton("Pay for Items");
-		payForItems.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-
-				Object[] options={"Cancel","Pay by Credit Card","Paypal"};
-				
-				int choice= (JOptionPane.showOptionDialog(contentPane, "Choose a payment method", "Payment", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null));
-				if (choice==1){ 
-					PayCard pay =new PayCard(customer,login);
-					pay.setVisible(true);
-					
-					CustomerApp.this.setVisible(false);
-
-				}else if (choice==2){
-					PayEmail pay =new PayEmail(customer,login);
-					pay.setVisible(true);
-					
-					CustomerApp.this.setVisible(false);
-
-				}
-				
-				
-			}
-		});
-		payForItems.setBounds(510, 413, 140, 36);
-		contentPane.add(payForItems);
 
 
 
@@ -302,7 +239,7 @@ public class CustomerApp extends JFrame {
 		viewAllButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				List <List<String>> allBooksList =customer.findAll("Stock.txt");
+				List <List<String>> allBooksList =admin.findAll("Stock.txt");
 				List<String> allBooksArray =new ArrayList<>();
 				
 		
@@ -336,54 +273,8 @@ public class CustomerApp extends JFrame {
 			}
 
 		});
-		viewAllButton.setBounds(815, 413, 111, 36);
+		viewAllButton.setBounds(565, 413, 111, 36);
 		contentPane.add(viewAllButton);
-		
-		JButton viewBasketButton = new JButton("View Basket");
-		viewBasketButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				
-				List <List<String>> basketList =customer.returnBasket();
-				List<String> basketArray =new ArrayList<>();
-				
-		
-				for (int i =0; i<basketList.size();i++){
-					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));
-	
-					
-				}	
-
-				
-			
-
-				DefaultListModel model = new DefaultListModel<>();
-
-				for (String i : basketArray) {
-
-					model.addElement(i);
-					
-					
-				}
-				displayBox.setModel(model);
-				isbnTextField.setText(null);
-				typeTextField.setText(null);
-				titleTextField.setText(null);
-				langTextField.setText(null);
-				genreTextField.setText(null);
-				releaseDateTextField.setText(null);
-				retailPriceTextField.setText(null);
-				add1TextField.setText(null);
-				add2TextField.setText(null);
-				quantityComboBox.removeAllItems();
-		
-
-
-
-			}
-		});
-		viewBasketButton.setBounds(953, 413, 140, 36);
-		contentPane.add(viewBasketButton);
 		
 		JButton searchButton = new JButton("Search Books");
 		searchButton.addActionListener(new ActionListener() {
@@ -428,7 +319,7 @@ public class CustomerApp extends JFrame {
 					searchArray.add(add2TextField.getText());
 				}
 
-				searchList=customer.searchBooks("Stock.txt", searchArray);
+				searchList=admin.searchBooks("Stock.txt", searchArray);
 
 
 				for (int i =0; i<searchList.size();i++){
@@ -460,7 +351,7 @@ public class CustomerApp extends JFrame {
 
 			}
 		});
-		searchButton.setBounds(671, 413, 121, 36);
+		searchButton.setBounds(384, 413, 121, 36);
 		contentPane.add(searchButton);
 
 		JButton clearButton = new JButton("Clear Entries");
@@ -486,7 +377,7 @@ public class CustomerApp extends JFrame {
 
 			}
 		});
-		clearButton.setBounds(1119, 413, 140, 36);
+		clearButton.setBounds(720, 413, 140, 36);
 		contentPane.add(clearButton);
 		
 		JButton exitButton = new JButton("Exit");
@@ -503,7 +394,7 @@ public class CustomerApp extends JFrame {
 
 		
 
-		exitButton.setBounds(1287, 413, 105, 36);
+		exitButton.setBounds(903, 413, 105, 36);
 		contentPane.add(exitButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -536,7 +427,7 @@ public class CustomerApp extends JFrame {
 						add2TextField.setText(listArray.get(9));
 
 						
-						int quant=Integer.parseInt( customer.findOne(listArray.get(0), "Stock.txt").get(7));
+						int quant=Integer.parseInt( admin.findOne(listArray.get(0), "Stock.txt").get(7));
 						
 						MutableComboBoxModel model = (MutableComboBoxModel) quantityComboBox.getModel() ;
 						for(int i=1;i<=quant;i++){
@@ -604,7 +495,7 @@ public class CustomerApp extends JFrame {
 		contentPane.add(isbnTextField);
 		isbnTextField.setColumns(10);
 		
-		JLabel nameLabel = new JLabel("User: "+customer.username);
+		JLabel nameLabel = new JLabel("User: "+admin.username);
 		nameLabel.setBounds(18, 6, 305, 16);
 		contentPane.add(nameLabel);
 

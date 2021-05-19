@@ -67,7 +67,9 @@ public class Customer extends User {
         return myBasket.getBasket();
     }
 
-
+    public float getPrice(){
+        return myBasket.getTotalPrice();
+    }
 
     public boolean payForItems(String payMethod,String cardNumber,String securityCode,String email){
 
@@ -157,9 +159,9 @@ public class Customer extends User {
 
 
 class Books{
-    protected String isbn,type,title,lang,genre,releaseDate,add1,add2;
-    protected int quantity;
-    protected float retailPrice;
+    public String isbn,type,title,lang,genre,releaseDate,add1,add2;
+    public int quantity;
+    public float retailPrice;
 
     public Books(List<String> newBook){
 

@@ -71,7 +71,7 @@ public class LoginPage {
 				
 				if (listArray.get(6).equalsIgnoreCase("customer")){
 					
-					CustomerApp create =new CustomerApp(listArray.get(0));
+					CustomerApp create =new CustomerApp(listArray.get(0),frame);
 					create.setVisible(true);
 					frame.setVisible(false);
 				}
