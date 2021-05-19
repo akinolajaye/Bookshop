@@ -54,7 +54,7 @@ public class CustomerApp extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CustomerApp frame = new CustomerApp("101");
+					CustomerApp frame = new CustomerApp("102");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,13 +67,13 @@ public class CustomerApp extends JFrame {
 	 * Create the frame.
 	 */
 
-	public CustomerApp(){}
+	//public CustomerApp(){}
 	
 	public CustomerApp(String id) {
 		customerID=id;
 		Customer customer=new Customer(customerID);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0,1306 , 553);
+		setBounds(0, 0,1446 , 553);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -476,11 +476,11 @@ public class CustomerApp extends JFrame {
 
 		
 
-		exitButton.setBounds(1219, 413, 89, 36);
+		exitButton.setBounds(1287, 413, 105, 36);
 		contentPane.add(exitButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(446, 30, 593, 296);
+		scrollPane.setBounds(446, 30, 824, 351);
 		contentPane.add(scrollPane);
 		
 		displayBox = new JList();
@@ -576,13 +576,15 @@ public class CustomerApp extends JFrame {
 		isbnTextField.setBounds(141, 25, 182, 26);
 		contentPane.add(isbnTextField);
 		isbnTextField.setColumns(10);
+		
+		JLabel nameLabel = new JLabel("User: "+customer.username);
+		nameLabel.setBounds(18, 6, 305, 16);
+		contentPane.add(nameLabel);
 
 
 		
 
 
 	}
-
-
 }
 

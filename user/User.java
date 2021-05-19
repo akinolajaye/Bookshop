@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class User {
 
     
-    protected String id, username, surname,houseNumber, postcode, city, role;
+    public String id, username, surname,houseNumber, postcode, city, role;
     protected String filename;
     protected String regex ="\\s*,\\s*";//defines a regex that removes commas and trailing white space
 
