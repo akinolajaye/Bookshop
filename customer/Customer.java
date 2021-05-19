@@ -107,7 +107,7 @@ public class Customer extends User {
     public void cancelItems(String payMethod){
 
          
-         updateActivityLog(payMethod, "Cancelled");
+         updateActivityLog(payMethod, "Cancelled");// the user cancels their transaction
          myBasket.cancelBasketStock();
          myBasket.emptyBasket();
     }
@@ -198,7 +198,7 @@ class Basket{
             for (Books booksInBasket : items) {
                 if (booksInBasket.isbn.equals(newItem.isbn)){//performs a check if the book is already in the basket
                     booksInBasket.quantity+=amount;//adds quantity to the book in the basket instead
-                    updateStock(newItem.isbn, "remove",amount);//updates stock by removing one
+                    updateStock(newItem.isbn, "remove",amount);//updates stock by removing the amount
                     exists=true;
                     break;
                 }
@@ -208,7 +208,7 @@ class Basket{
     
             if (!exists){//if doersnt exist
                 updateStock(newItem.isbn, "remove",amount);
-                newItem.quantity=amount;//books quantity is set to 1
+                newItem.quantity=amount;//books quantity is set to the amount
                 items.add(newItem);}//adds book instance to a list of books
 
         }else{
@@ -256,10 +256,10 @@ class Basket{
 
     public void emptyBasket(){
 
-        items.clear();
+        items.clear();//clears list
     }
 
-    public void cancelBasketStock(){
+    public void cancelBasketStock(){// updates the stock when emptying basket
         for (Books books : items) {
             updateStock(books.isbn, "add",books.quantity);
             

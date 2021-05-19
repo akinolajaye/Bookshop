@@ -79,7 +79,7 @@ public class CustomerApp extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		System.out.println(CustomerApp.this.getClass());
+
 		
 		JLabel isbnLabel = new JLabel("ISBN");
 		isbnLabel.setBounds(18, 30, 61, 16);
@@ -387,12 +387,14 @@ public class CustomerApp extends JFrame {
 		contentPane.add(viewBasketButton);
 		
 		JButton searchButton = new JButton("Search Books");
+		searchButton.setEnabled(false);
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List <List<String>> searchList;
+				List <List<String>> searchList = new ArrayList<>();
 				List<String> searchArray = new ArrayList<>();
 				List<String> searchReturn = new ArrayList<>();
 
+				
 
 				if(!isbnTextField.getText().equalsIgnoreCase("")){
 					searchArray.add(isbnTextField.getText());
@@ -429,9 +431,16 @@ public class CustomerApp extends JFrame {
 					searchArray.add(add2TextField.getText());
 				}
 
-				if(!quantityComboBox.getSelectedItem().toString().equalsIgnoreCase("")){
-					searchArray.add(quantityComboBox.getSelectedItem().toString());
+				try{
+
+					if(!quantityComboBox.getSelectedItem().toString().equalsIgnoreCase("")){
+						searchArray.add(quantityComboBox.getSelectedItem().toString());
+					}
+					
+				}catch(NullPointerException err){
+
 				}
+
 				searchList=customer.searchBooks("Stock.txt", searchArray);
 
 
@@ -439,13 +448,15 @@ public class CustomerApp extends JFrame {
 					searchReturn.add(searchList.get(i).toString().replace("[", "").replace("]", ""));
 				}	
 
-				DefaultListModel model = new DefaultListModel<>();
 
-				for (String i : searchReturn) {
+					DefaultListModel model = new DefaultListModel<>();
 
-					model.addElement(i);
-					
-				}
+					for (String i : searchReturn) {
+
+						model.addElement(i);
+						
+					}
+				
 				displayBox.setModel(model);
 
 				isbnTextField.setText(null);

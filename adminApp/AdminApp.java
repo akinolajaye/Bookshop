@@ -240,7 +240,7 @@ public class AdminApp extends JFrame {
 		JButton searchButton = new JButton("Search Books");
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List <List<String>> searchList;
+				List <List<String>> searchList = new ArrayList<>();
 				List<String> searchArray = new ArrayList<>();
 				List<String> searchReturn = new ArrayList<>();
 
@@ -279,9 +279,18 @@ public class AdminApp extends JFrame {
 				if(!add2TextField.getText().equalsIgnoreCase("")){
 					searchArray.add(add2TextField.getText());
 				}
-				if(!quantityComboBox.getSelectedItem().toString().equalsIgnoreCase("")){
-					searchArray.add(quantityComboBox.getSelectedItem().toString());
+
+
+				try{
+
+					if(!quantityComboBox.getSelectedItem().toString().equalsIgnoreCase("")){
+						searchArray.add(quantityComboBox.getSelectedItem().toString());
+					}
+					
+				}catch(NullPointerException err){
+
 				}
+				
 				searchList=admin.searchBooks("Stock.txt", searchArray);
 
 

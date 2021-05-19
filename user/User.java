@@ -116,6 +116,7 @@ public class User {
 
     public List<List<String>> searchBooks(String filename,List<String> searchField){
 
+
         File file= new File(filename);//creates file variable
         Scanner fileReader; // scanner variable is created to read the file and return lines
         List<List<String>> resultArray=new ArrayList<>(); // 2darray variable to hold splitted data field strings
@@ -127,19 +128,26 @@ public class User {
             while(fileReader.hasNextLine()){//loop while the textfile has another line
                 String searchId =Arrays.asList(fileReader.nextLine().split(regex)).get(0);//gets and converts the text file line the retrieves the id
                 List<String> dataField=findOne(searchId, filename);//calls the find one function to get the single data row based on id
-                if (dataField.containsAll(searchField)){ //checks if the data being searched for is in the data field
-                    resultArray.add(i,dataField);//adds it to result array if true
-                    i++;
+                 
+
+                if (!searchField.isEmpty()){
 
 
+                
+                    if (dataField.containsAll(searchField)){ //checks if the data being searched for is in the data field
+                        resultArray.add(i,dataField);//adds it to result array if true
+                        i++;
 
-
+                    }
                 }
+
             }
 
         }catch(FileNotFoundException e){
             ;
         }
+
+        
 
         return resultArray;
         
