@@ -647,8 +647,8 @@ public class CustomerApp extends JFrame {
 		contentPane.add(isbnTextField);
 		isbnTextField.setColumns(10);
 		
-		JLabel nameLabel = new JLabel("User: "+customer.username);
-		nameLabel.setBounds(18, 6, 305, 16);
+		JLabel nameLabel = new JLabel("User: "+customer.username+" "+customer.surname);
+		nameLabel.setBounds(18, 6, 341, 16);
 		contentPane.add(nameLabel);
 		
 		JButton logOutButton = new JButton("Log Out");

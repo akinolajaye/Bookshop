@@ -101,7 +101,7 @@ public class PayCard extends JFrame {
 		
 		JLabel userLabel = new JLabel("User: "+customer.username+" "+customer.surname);
 		userLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		userLabel.setBounds(20, 19, 91, 16);
+		userLabel.setBounds(20, 13, 210, 31);
 		contentPane.add(userLabel);
 		
 		JButton payButton = new JButton("Pay");
@@ -147,22 +147,12 @@ public class PayCard extends JFrame {
 		
 		JLabel costLabel = new JLabel("Total Price: £ " + customer.getPrice());
 		costLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		costLabel.setBounds(633, 17, 180, 27);
+		costLabel.setBounds(633, 17, 216, 27);
 		contentPane.add(costLabel);
 		
 		JLabel cardLabel = new JLabel("Paying by Card");
 		cardLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		cardLabel.setBounds(210, 5, 163, 38);
+		cardLabel.setBounds(242, 5, 163, 38);
 		contentPane.add(cardLabel);
-		
-		JButton backButton = new JButton("Back");
-		backButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				
-			}
-		});
-		backButton.setBounds(103, 292, 117, 29);
-		contentPane.add(backButton);
 	}
 }

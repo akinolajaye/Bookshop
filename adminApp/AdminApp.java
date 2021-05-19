@@ -465,7 +465,7 @@ public class AdminApp extends JFrame {
 		contentPane.add(isbnTextField);
 		isbnTextField.setColumns(10);
 		
-		JLabel nameLabel = new JLabel("User: "+admin.username);
+		JLabel nameLabel = new JLabel("User: "+admin.username+" "+admin.surname);
 		nameLabel.setBounds(18, 6, 305, 16);
 		contentPane.add(nameLabel);
 		

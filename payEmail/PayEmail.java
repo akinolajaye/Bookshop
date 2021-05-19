@@ -95,7 +95,7 @@ public class PayEmail extends JFrame {
 		
 		JLabel userLabel = new JLabel("User: "+customer.username+" "+customer.surname);
 		userLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 17));
-		userLabel.setBounds(20, 19, 91, 16);
+		userLabel.setBounds(20, 13, 195, 31);
 		contentPane.add(userLabel);
 		
 		JButton payButton = new JButton("Pay");
@@ -144,18 +144,10 @@ public class PayEmail extends JFrame {
 		costLabel.setBounds(633, 17, 180, 27);
 		contentPane.add(costLabel);
 		
-		JLabel cardLabel = new JLabel("Paying by Card");
-		cardLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		cardLabel.setBounds(210, 5, 163, 38);
-		contentPane.add(cardLabel);
-		
-		JButton backButton = new JButton("Back");
-		backButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		backButton.setBounds(103, 292, 117, 29);
-		contentPane.add(backButton);
+		JLabel payEmailLabel = new JLabel("Paying by PayPal");
+		payEmailLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		payEmailLabel.setBounds(237, 5, 163, 38);
+		contentPane.add(payEmailLabel);
 	}
 }
 
