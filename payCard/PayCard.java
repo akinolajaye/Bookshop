@@ -112,7 +112,7 @@ public class PayCard extends JFrame {
 				boolean pay= customer.payForItems(payMethod, cardNumTextField.getText(), codeTextField.getText(),"");
 				if(pay){
 
-					JOptionPane.showMessageDialog(contentPane, "Payment Successful");
+					JOptionPane.showMessageDialog(contentPane,  "£ "+customer.getPrice()+" paid using Credit Card");
 					login.setVisible(true);
 					PayCard.this.setVisible(false);
 					

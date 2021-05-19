@@ -135,42 +135,51 @@ public class CustomerApp extends JFrame {
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				customer.addItemToBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));//adds item to basket
+				try{
+					customer.addItemToBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));//adds item to basket
 
-				List <List<String>> basketList =customer.returnBasket();
-				List<String> basketArray =new ArrayList<>();
-				
+					List <List<String>> basketList =customer.returnBasket();
+					List<String> basketArray =new ArrayList<>();
+					
+			
+					for (int i =0; i<basketList.size();i++){
+						basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));//gets line an converts it to a formatted string to print in the jlist
 		
-				for (int i =0; i<basketList.size();i++){
-					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));//gets line an converts it to a formatted string to print in the jlist
+						
+					}	
 	
 					
-				}	
-
 				
-			
+	
+					DefaultListModel model = new DefaultListModel<>();
+	
+					for (String i : basketArray) {
+	
+						model.addElement(i);//puts string in array
+						
+						
+					}
+					displayBox.setModel(model);
+	
+					/* empties entry fields after adding items */
+					isbnTextField.setText(null);
+					typeTextField.setText(null);
+					titleTextField.setText(null);
+					langTextField.setText(null);
+					genreTextField.setText(null);
+					releaseDateTextField.setText(null);
+					retailPriceTextField.setText(null);
+					add1TextField.setText(null);
+					add2TextField.setText(null);
+					quantityComboBox.removeAllItems();
 
-				DefaultListModel model = new DefaultListModel<>();
+				}catch(NullPointerException x){
 
-				for (String i : basketArray) {
 
-					model.addElement(i);//puts string in array
-					
-					
+					JOptionPane.showMessageDialog(contentPane, "Item Out of Stock!!");
 				}
-				displayBox.setModel(model);
 
-				/* empties entry fields after adding items */
-				isbnTextField.setText(null);
-				typeTextField.setText(null);
-				titleTextField.setText(null);
-				langTextField.setText(null);
-				genreTextField.setText(null);
-				releaseDateTextField.setText(null);
-				retailPriceTextField.setText(null);
-				add1TextField.setText(null);
-				add2TextField.setText(null);
-				quantityComboBox.removeAllItems();
+
 				
 
 			}
@@ -272,26 +281,33 @@ public class CustomerApp extends JFrame {
 		payForItems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				if(customer.getPrice()!=0.0){
 
-				Object[] options={"Cancel","Pay by Credit Card","Paypal"};
+					Object[] options={"Cancel","Pay by Credit Card","Paypal"};
 				
-				/* creats a dialog box to decide between which pay method */
-				int choice= (JOptionPane.showOptionDialog(contentPane, "Choose a payment method", "Payment", 
-				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null));
-				if (choice==1){ 
-					PayCard pay =new PayCard(customer,login);
-					pay.setVisible(true);//makes gui visible
-					CustomerApp.this.setVisible(false);//hides this gui
-
-				}else if (choice==2){
-					PayEmail pay =new PayEmail(customer,login);
-					pay.setVisible(true);
+					/* creats a dialog box to decide between which pay method */
+					int choice= (JOptionPane.showOptionDialog(contentPane, "Choose a payment method", "Payment", 
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null));
+					if (choice==1){ 
+						PayCard pay =new PayCard(customer,login);
+						pay.setVisible(true);//makes gui visible
+						CustomerApp.this.setVisible(false);//hides this gui
+	
+					}else if (choice==2){
+						PayEmail pay =new PayEmail(customer,login);
+						pay.setVisible(true);
+						
+						CustomerApp.this.setVisible(false);
+	
+					}
 					
-					CustomerApp.this.setVisible(false);
+					
+				}else{
 
+					JOptionPane.showMessageDialog(contentPane, "Nothing in Basket!");
 				}
-				
-				
+
+
 			}
 		});
 		payForItems.setBounds(510, 413, 140, 36);
@@ -310,10 +326,9 @@ public class CustomerApp extends JFrame {
 				
 		
 				for (int i =0; i<allBooksList.size();i++){
-					if(!allBooksList.get(i).get(7).equalsIgnoreCase("0")){//checks if the stock is not 0
 
 					allBooksArray.add(allBooksList.get(i).toString().replace("[", "").replace("]", ""));	
-					}
+					
 					
 				}	
 

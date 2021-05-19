@@ -106,7 +106,7 @@ public class PayEmail extends JFrame {
 				boolean pay= customer.payForItems(payMethod, "","",emailTextField.getText());
 				if(pay){
 
-					JOptionPane.showMessageDialog(contentPane, "Payment Successful");
+					JOptionPane.showMessageDialog(contentPane, "£ "+customer.getPrice()+" paid using PayPal");
 					login.setVisible(true);
 					PayEmail.this.setVisible(false);
 					
