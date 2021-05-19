@@ -45,6 +45,7 @@ public class AdminApp extends JFrame {
 	private JTextField add1TextField;
 	private JTextField add2TextField;
 	private JTextField isbnTextField;
+	private JButton enableButton;
 
 	/**
 	 * 
@@ -122,6 +123,7 @@ public class AdminApp extends JFrame {
 
 		
 		JComboBox quantityComboBox = new JComboBox();
+		quantityComboBox.setEditable(true);
 
 
 		
@@ -194,7 +196,7 @@ public class AdminApp extends JFrame {
 
 
 		
-		JButton viewAllButton = new JButton("View All");
+		JButton viewAllButton = new JButton("View All Books");
 		viewAllButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -277,7 +279,9 @@ public class AdminApp extends JFrame {
 				if(!add2TextField.getText().equalsIgnoreCase("")){
 					searchArray.add(add2TextField.getText());
 				}
-
+				if(!quantityComboBox.getSelectedItem().toString().equalsIgnoreCase("")){
+					searchArray.add(quantityComboBox.getSelectedItem().toString());
+				}
 				searchList=admin.searchBooks("Stock.txt", searchArray);
 
 
@@ -305,8 +309,6 @@ public class AdminApp extends JFrame {
 				add2TextField.setText(null);
 				quantityComboBox.removeAllItems();
 	
-
-
 
 			}
 		});
@@ -357,7 +359,7 @@ public class AdminApp extends JFrame {
 		contentPane.add(exitButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(446, 30, 824, 351);
+		scrollPane.setBounds(488, 28, 824, 351);
 		contentPane.add(scrollPane);
 		
 		displayBox = new JList();
@@ -457,7 +459,22 @@ public class AdminApp extends JFrame {
 		JLabel nameLabel = new JLabel("User: "+admin.username);
 		nameLabel.setBounds(18, 6, 305, 16);
 		contentPane.add(nameLabel);
+		
+		JButton logOutButton = new JButton("Log Out");
+		logOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
+				
+
+				
+				login.setVisible(true);
+				AdminApp.this.setVisible(false);
+
+
+			}
+		});
+		logOutButton.setBounds(357, 25, 117, 29);
+		contentPane.add(logOutButton);
 
 		
 

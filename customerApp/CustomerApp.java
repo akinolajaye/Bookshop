@@ -45,6 +45,7 @@ public class CustomerApp extends JFrame {
 	private JTextField add1TextField;
 	private JTextField add2TextField;
 	private JTextField isbnTextField;
+	JButton enableButton;
 
 	/**
 	 * 
@@ -69,7 +70,7 @@ public class CustomerApp extends JFrame {
 
 	public CustomerApp(){}
 	
-	public CustomerApp(String id,JFrame login ) {
+	public CustomerApp(String id,JFrame login) {
 		customerID=id;
 		Customer customer=new Customer(customerID);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -298,7 +299,7 @@ public class CustomerApp extends JFrame {
 
 
 		
-		JButton viewAllButton = new JButton("View All");
+		JButton viewAllButton = new JButton("View All Books");
 		viewAllButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -428,6 +429,9 @@ public class CustomerApp extends JFrame {
 					searchArray.add(add2TextField.getText());
 				}
 
+				if(!quantityComboBox.getSelectedItem().toString().equalsIgnoreCase("")){
+					searchArray.add(quantityComboBox.getSelectedItem().toString());
+				}
 				searchList=customer.searchBooks("Stock.txt", searchArray);
 
 
@@ -455,12 +459,31 @@ public class CustomerApp extends JFrame {
 				add2TextField.setText(null);
 				quantityComboBox.removeAllItems();
 	
+				isbnTextField.setEditable(false);
+				typeTextField.setEditable(false);
+				titleTextField.setEditable(false);
+				langTextField.setEditable(false);
+				genreTextField.setEditable(false);
+				releaseDateTextField.setEditable(false);
+				retailPriceTextField.setEditable(false);
+				add1TextField.setEditable(false);
+				add2TextField.setEditable(false);
+				quantityComboBox.setEditable(false);
 
+
+				addButton.setEnabled(true);
+				removeButton.setEnabled(true);
+				emptyBasketButton.setEnabled(true);
+				payForItems.setEnabled(true);
+				enableButton.setEnabled(true);
+				viewAllButton.setEnabled(true);
+				viewBasketButton.setEnabled(true);
+				searchButton.setEnabled(false);
 
 
 			}
 		});
-		searchButton.setBounds(671, 413, 121, 36);
+		searchButton.setBounds(671, 463, 121, 36);
 		contentPane.add(searchButton);
 
 		JButton clearButton = new JButton("Clear Entries");
@@ -507,7 +530,7 @@ public class CustomerApp extends JFrame {
 		contentPane.add(exitButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(446, 30, 824, 351);
+		scrollPane.setBounds(493, 28, 824, 351);
 		contentPane.add(scrollPane);
 		
 		displayBox = new JList();
@@ -540,7 +563,7 @@ public class CustomerApp extends JFrame {
 						
 						MutableComboBoxModel model = (MutableComboBoxModel) quantityComboBox.getModel() ;
 						for(int i=1;i<=quant;i++){
-							//System.out.println(i);
+							
 							model.addElement(i);
 
 						}
@@ -560,46 +583,55 @@ public class CustomerApp extends JFrame {
 		scrollPane.setViewportView(displayBox);
 		
 		typeTextField = new JTextField();
+		typeTextField.setEditable(false);
 		typeTextField.setBounds(143, 55, 180, 26);
 		contentPane.add(typeTextField);
 		typeTextField.setColumns(10);
 		
 		titleTextField = new JTextField();
+		titleTextField.setEditable(false);
 		titleTextField.setColumns(10);
 		titleTextField.setBounds(143, 85, 180, 26);
 		contentPane.add(titleTextField);
 		
 		langTextField = new JTextField();
+		langTextField.setEditable(false);
 		langTextField.setColumns(10);
 		langTextField.setBounds(143, 115, 180, 26);
 		contentPane.add(langTextField);
 		
 		genreTextField = new JTextField();
+		genreTextField.setEditable(false);
 		genreTextField.setColumns(10);
 		genreTextField.setBounds(143, 145, 180, 26);
 		contentPane.add(genreTextField);
 		
 		releaseDateTextField = new JTextField();
+		releaseDateTextField.setEditable(false);
 		releaseDateTextField.setColumns(10);
 		releaseDateTextField.setBounds(143, 175, 180, 26);
 		contentPane.add(releaseDateTextField);
 		
 		retailPriceTextField = new JTextField();
+		retailPriceTextField.setEditable(false);
 		retailPriceTextField.setColumns(10);
 		retailPriceTextField.setBounds(143, 205, 180, 26);
 		contentPane.add(retailPriceTextField);
 		
 		add1TextField = new JTextField();
+		add1TextField.setEditable(false);
 		add1TextField.setColumns(10);
 		add1TextField.setBounds(143, 265, 180, 26);
 		contentPane.add(add1TextField);
 		
 		add2TextField = new JTextField();
+		add2TextField.setEditable(false);
 		add2TextField.setColumns(10);
 		add2TextField.setBounds(143, 300, 180, 26);
 		contentPane.add(add2TextField);
 		
 		isbnTextField = new JTextField();
+		isbnTextField.setEditable(false);
 		isbnTextField.setBounds(141, 25, 182, 26);
 		contentPane.add(isbnTextField);
 		isbnTextField.setColumns(10);
@@ -607,6 +639,63 @@ public class CustomerApp extends JFrame {
 		JLabel nameLabel = new JLabel("User: "+customer.username);
 		nameLabel.setBounds(18, 6, 305, 16);
 		contentPane.add(nameLabel);
+		
+		JButton logOutButton = new JButton("Log Out");
+		logOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				
+
+				
+				login.setVisible(true);
+				CustomerApp.this.setVisible(false);
+
+
+			}
+		});
+		logOutButton.setBounds(350, 17, 117, 29);
+		contentPane.add(logOutButton);
+		
+		enableButton = new JButton("Enable Search");
+		enableButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+
+				isbnTextField.setEditable(true);
+				typeTextField.setEditable(true);
+				titleTextField.setEditable(true);
+				langTextField.setEditable(true);
+				genreTextField.setEditable(true);
+				releaseDateTextField.setEditable(true);
+				retailPriceTextField.setEditable(true);
+				add1TextField.setEditable(true);
+				add2TextField.setEditable(true);
+				quantityComboBox.setEditable(true);
+
+				addButton.setEnabled(false);
+				removeButton.setEnabled(false);
+				emptyBasketButton.setEnabled(false);
+				payForItems.setEnabled(false);
+				enableButton.setEnabled(false);
+				viewAllButton.setEnabled(false);
+				viewBasketButton.setEnabled(false);
+				searchButton.setEnabled(true);
+
+				DefaultListModel model = new DefaultListModel<>();
+				model.addElement("");
+				displayBox.setModel(model);
+
+
+
+				JOptionPane.showMessageDialog(contentPane, "Search enabled enter search criteria \n in entry field and press Search");
+				
+
+				
+
+
+			}
+		});
+		enableButton.setBounds(671, 417, 117, 36);
+		contentPane.add(enableButton);
 
 
 		
