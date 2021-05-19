@@ -2,6 +2,8 @@ package loginPage;
 
 import java.awt.EventQueue;
 import customerApp.CustomerApp;
+
+
 import javax.swing.JFrame;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -22,6 +24,7 @@ import adminApp.AdminApp;
 import customer.Customer;
 import user.User;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
 import java.lang.ProcessBuilder.Redirect.Type;
 import java.awt.event.ActionEvent;
 
@@ -106,8 +109,8 @@ public class LoginPage {
 
 				frame= new JFrame("Exit");
 				
-				if (JOptionPane .showConfirmDialog(frame, "Confirm if you want to exit",
-						"Library System", JOptionPane.YES_NO_OPTION)== JOptionPane.YES_NO_OPTION) {
+				if (JOptionPane .showConfirmDialog(frame, "Confirm if you want to exit", //creats an exit menu panel
+						"Library System", JOptionPane.YES_NO_OPTION)== JOptionPane.YES_NO_OPTION) {//if yes is selected
 					System.exit(0);
 				}
 			
@@ -118,12 +121,13 @@ public class LoginPage {
 
 		
 		User userClass = new User();
-		List<List<String>> userList =userClass.findAll("UserAccounts.txt");
+		
+		List<List<String>> userList =userClass.findAll("UserAccounts.txt");//gets sll data from text file
 		List<String> userListString =new ArrayList<>();
 		
 
 		for (int i =0; i<userList.size();i++){
-			userListString.add(userList.get(i).toString().replace("[", "").replace("]", ""));
+			userListString.add(userList.get(i).toString().replace("[", "").replace("]", ""));//adds line of data to the list and remove square brackets
 		}		
 			
 			
@@ -132,7 +136,7 @@ public class LoginPage {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(236, 12, 341, 276);
 		frame.getContentPane().add(scrollPane);
-		loginList = new JList(userListString.toArray());
+		loginList = new JList(userListString.toArray());//puts list in the jstring when program is run
 		loginList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		

@@ -6,3 +6,4 @@
 102,E20 3BS,17.1,44556677,2,Purchased,Credit Card,19-05-2021
 103,BN1 3XP,18.1,23456789,1,Cancelled,Credit Card,19-05-2021
 103,BN1 3XP,12.2,33332233,1,Cancelled,Credit Card,19-05-2021
+103,BN1 3XP,14.2,22334455,1,Purchased,Credit Card,19-05-2021

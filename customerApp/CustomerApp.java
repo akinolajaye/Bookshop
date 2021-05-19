@@ -1,6 +1,7 @@
 package customerApp;
 
 
+
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -134,14 +135,14 @@ public class CustomerApp extends JFrame {
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				customer.addItemToBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));
+				customer.addItemToBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));//adds item to basket
 
 				List <List<String>> basketList =customer.returnBasket();
 				List<String> basketArray =new ArrayList<>();
 				
 		
 				for (int i =0; i<basketList.size();i++){
-					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));
+					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));//gets line an converts it to a formatted string to print in the jlist
 	
 					
 				}	
@@ -153,13 +154,13 @@ public class CustomerApp extends JFrame {
 
 				for (String i : basketArray) {
 
-					model.addElement(i);
+					model.addElement(i);//puts string in array
 					
 					
 				}
 				displayBox.setModel(model);
 
-				
+				/* empties entry fields after adding items */
 				isbnTextField.setText(null);
 				typeTextField.setText(null);
 				titleTextField.setText(null);
@@ -182,7 +183,7 @@ public class CustomerApp extends JFrame {
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				customer.removeItemFromBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));
+				customer.removeItemFromBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));//removes item from basket
 				
 				List <List<String>> basketList =customer.returnBasket();
 				List<String> basketArray =new ArrayList<>();
@@ -225,7 +226,7 @@ public class CustomerApp extends JFrame {
 		emptyBasketButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				customer.emptyItemsFromBasket();
+				customer.emptyItemsFromBasket();//empties basket
 				
 				List <List<String>> basketList =customer.returnBasket();
 				List<String> basketArray =new ArrayList<>();
@@ -274,12 +275,13 @@ public class CustomerApp extends JFrame {
 
 				Object[] options={"Cancel","Pay by Credit Card","Paypal"};
 				
-				int choice= (JOptionPane.showOptionDialog(contentPane, "Choose a payment method", "Payment", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null));
+				/* creats a dialog box to decide between which pay method */
+				int choice= (JOptionPane.showOptionDialog(contentPane, "Choose a payment method", "Payment", 
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null));
 				if (choice==1){ 
 					PayCard pay =new PayCard(customer,login);
-					pay.setVisible(true);
-					
-					CustomerApp.this.setVisible(false);
+					pay.setVisible(true);//makes gui visible
+					CustomerApp.this.setVisible(false);//hides this gui
 
 				}else if (choice==2){
 					PayEmail pay =new PayEmail(customer,login);
@@ -308,7 +310,11 @@ public class CustomerApp extends JFrame {
 				
 		
 				for (int i =0; i<allBooksList.size();i++){
-					allBooksArray.add(allBooksList.get(i).toString().replace("[", "").replace("]", ""));
+					if(!allBooksList.get(i).get(7).equalsIgnoreCase("0")){//checks if the stock is not 0
+
+					allBooksArray.add(allBooksList.get(i).toString().replace("[", "").replace("]", ""));	
+					}
+					
 				}	
 
 				
@@ -350,14 +356,8 @@ public class CustomerApp extends JFrame {
 				
 		
 				for (int i =0; i<basketList.size();i++){
-					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));
-	
-					
+					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));					
 				}	
-
-				
-			
-
 				DefaultListModel model = new DefaultListModel<>();
 
 				for (String i : basketArray) {
@@ -377,10 +377,7 @@ public class CustomerApp extends JFrame {
 				add1TextField.setText(null);
 				add2TextField.setText(null);
 				quantityComboBox.removeAllItems();
-		
-
-
-
+	
 			}
 		});
 		viewBasketButton.setBounds(953, 413, 140, 36);
@@ -395,7 +392,8 @@ public class CustomerApp extends JFrame {
 				List<String> searchReturn = new ArrayList<>();
 
 				
-
+				/*validation to check for whehter the entry field or combo box is empty
+				if not empty the the value is added to the array */
 				if(!isbnTextField.getText().equalsIgnoreCase("")){
 					searchArray.add(isbnTextField.getText());
 				}
@@ -470,6 +468,8 @@ public class CustomerApp extends JFrame {
 				add2TextField.setText(null);
 				quantityComboBox.removeAllItems();
 	
+				/* disables the entry field so that the cannot they  cannot be used when not be unless its a search
+				that way the values added to the basket are the ones displayed by the view all button */
 				isbnTextField.setEditable(false);
 				typeTextField.setEditable(false);
 				titleTextField.setEditable(false);
@@ -481,7 +481,7 @@ public class CustomerApp extends JFrame {
 				add2TextField.setEditable(false);
 				quantityComboBox.setEditable(false);
 
-
+				/* enables the buttons so that they can be used again  */
 				addButton.setEnabled(true);
 				removeButton.setEnabled(true);
 				emptyBasketButton.setEnabled(true);
@@ -527,8 +527,8 @@ public class CustomerApp extends JFrame {
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (JOptionPane.showConfirmDialog(contentPane, "Confirm if you want to exit",
-						"Library System", JOptionPane.YES_NO_OPTION)== JOptionPane.YES_NO_OPTION) {
+				if (JOptionPane.showConfirmDialog(contentPane, "Confirm if you want to exit",//creates exit dialog box
+						"Library System", JOptionPane.YES_NO_OPTION)== JOptionPane.YES_NO_OPTION) { //closes system if yes is pressed
 					System.exit(0);
 				}
 			
@@ -544,7 +544,14 @@ public class CustomerApp extends JFrame {
 		scrollPane.setBounds(493, 28, 824, 351);
 		contentPane.add(scrollPane);
 		
-		displayBox = new JList();
+		List<List<String>> bookList =customer.findAll("Stock.txt");//gets sll data from text file
+		List<String> bookListString =new ArrayList<>();
+		
+
+		for (int i =0; i<bookList.size();i++){
+			bookListString.add(bookList.get(i).toString().replace("[", "").replace("]", ""));//adds line of data to the list and remove square brackets
+		}		
+		displayBox = new JList(bookListString.toArray());//sets the deault list box values
 		displayBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		
@@ -557,8 +564,9 @@ public class CustomerApp extends JFrame {
 						quantityComboBox.removeAllItems();
 						List<String> listArray;
 						
-						listArray=Arrays.asList(displayBox.getSelectedValue().toString().split("\\s*,\\s*"));	
-								
+						listArray=Arrays.asList(displayBox.getSelectedValue().toString().split("\\s*,\\s*"));//splits the listbox items into an array	
+						
+						/* puts list box items in entry fields */
 						isbnTextField.setText(listArray.get(0));
 						typeTextField.setText(listArray.get(1));
 						titleTextField.setText(listArray.get(2));
@@ -570,8 +578,9 @@ public class CustomerApp extends JFrame {
 						add2TextField.setText(listArray.get(9));
 
 						
-						int quant=Integer.parseInt( customer.findOne(listArray.get(0), "Stock.txt").get(7));
+						int quant=Integer.parseInt( listArray.get(7));
 						
+						// puts the possible quantites in the combo box
 						MutableComboBoxModel model = (MutableComboBoxModel) quantityComboBox.getModel() ;
 						for(int i=1;i<=quant;i++){
 							
@@ -654,11 +663,8 @@ public class CustomerApp extends JFrame {
 		JButton logOutButton = new JButton("Log Out");
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				
-
-				
-				login.setVisible(true);
+	
+				login.setVisible(true);//goe
 				CustomerApp.this.setVisible(false);
 
 
@@ -667,10 +673,11 @@ public class CustomerApp extends JFrame {
 		logOutButton.setBounds(350, 17, 117, 29);
 		contentPane.add(logOutButton);
 		
-		enableButton = new JButton("Enable Search");
+		enableButton = new JButton("Enable Search");//buttons to enable search function
 		enableButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 
+				/* makes the entryy fields editable so that that search criteria can be entered  */
 				isbnTextField.setEditable(true);
 				typeTextField.setEditable(true);
 				titleTextField.setEditable(true);
@@ -682,6 +689,7 @@ public class CustomerApp extends JFrame {
 				add2TextField.setEditable(true);
 				quantityComboBox.setEditable(true);
 
+				/* disables buttons so that they cant be used while searching */
 				addButton.setEnabled(false);
 				removeButton.setEnabled(false);
 				emptyBasketButton.setEnabled(false);
@@ -697,7 +705,7 @@ public class CustomerApp extends JFrame {
 
 
 
-				JOptionPane.showMessageDialog(contentPane, "Search enabled enter search criteria \n in entry field and press Search");
+				JOptionPane.showMessageDialog(contentPane, "Search Enabled Enter Search Criteria \n In Entry Field and Press Search");
 				
 
 				

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,13 +15,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+import com.sun.tools.javac.Main;
 
 import user.User;
 
 // edit where and when items get removed from stock and when stock gets put back
  
-public class Customer extends User {
+public class Customer extends User {    
 
     public  Basket myBasket = new Basket();//empty basket is created
 
@@ -311,8 +313,11 @@ class Basket{
         String buffString;
 
         try {
+            InputStream is= this.getClass().getClassLoader().getResourceAsStream("Stock.txt");
+            //InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader file = new BufferedReader(new InputStreamReader(is));
            
-            BufferedReader file = new BufferedReader(new FileReader("Stock.txt"));
+            //BufferedReader file = new BufferedReader(new FileReader("Stock.txt"));
             while ((dataStr=file.readLine()) !=null) {//reads each line and stores each line as a string in datastr
 
                 if(!found){

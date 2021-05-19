@@ -139,6 +139,8 @@ public class AdminApp extends JFrame {
 				
 				List<String> newBook = new ArrayList<>();
 
+				/*gets text from all entry fields ands adds them to the array */
+
 				newBook.add(isbnTextField.getText());
 				newBook.add(typeLabel.getText());
 				newBook.add(titleTextField.getText());
@@ -150,7 +152,8 @@ public class AdminApp extends JFrame {
 				
 				newBook.add(add1TextField.getText());
 				newBook.add(add2TextField.getText());
-				admin.addNewBook(newBook);
+
+				admin.addNewBook(newBook);//adds the array to the stock file using addnew book
 	
 				List <List<String>> allBooksList =admin.findAll("Stock.txt");
 				List<String> allBooksArray =new ArrayList<>();
@@ -173,7 +176,7 @@ public class AdminApp extends JFrame {
 
 
 
-				
+				/* empties the entry field once added data */
 				isbnTextField.setText(null);
 				typeTextField.setText(null);
 				titleTextField.setText(null);

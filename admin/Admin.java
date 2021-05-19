@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,8 +45,12 @@ public class Admin extends User{
         System.out.println(bookList);        
     
             try {
+
+                InputStream is= this.getClass().getClassLoader().getResourceAsStream("Stock.txt");//gets file as an input stream
                
-                BufferedReader file = new BufferedReader(new FileReader("Stock.txt"));
+                BufferedReader file = new BufferedReader(new InputStreamReader(is));//stores it in a buffer read
+               
+                
                 while ((dataStr=file.readLine()) !=null) {//reads each line and stores each line as a string in datastr
     
                     if(!found){
@@ -82,10 +88,10 @@ public class Admin extends User{
                 file.close();
     
                 FileWriter stockFile = new FileWriter("Stock.txt");
-                stockFile.write(buff.toString());
+                stockFile.write(buff.toString());//writes all data back to the txt file
                 stockFile.close();
 
-                if (!found){
+                if (!found){//if not found then that means it is a new book and so is added to the end of the file
 
                 FileWriter addBook = new FileWriter("Stock.txt",true);
 
