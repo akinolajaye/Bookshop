@@ -32,9 +32,12 @@ public class Customer extends User {
 
     public void addItemToBasket(String id,int amount){
         List<String> item= findOne(id, "Stock.txt");//uses the find one function to get book via id
-        
+        if(!item.isEmpty()){
         Books newItem = new Books(item);//creates a class instance of the book found
         myBasket.addToBasket(newItem,amount);//calls the add to basket function which books the book in a list of type Books(the class)
+
+        }
+
 
     
     }
@@ -105,6 +108,11 @@ public class Customer extends User {
          updateActivityLog(payMethod, "Cancelled");
          myBasket.cancelBasketStock();
          myBasket.emptyBasket();
+    }
+
+    public void emptyItemsFromBasket(){
+        myBasket.cancelBasketStock();
+        myBasket.emptyBasket();
     }
 
     public void updateActivityLog(String payMethod,String result){
@@ -198,7 +206,7 @@ class Basket{
     
             if (!exists){//if doersnt exist
                 updateStock(newItem.isbn, "remove",amount);
-                newItem.quantity=1;//books quantity is set to 1
+                newItem.quantity=amount;//books quantity is set to 1
                 items.add(newItem);}//adds book instance to a list of books
 
         }else{
@@ -211,8 +219,18 @@ class Basket{
 
     public void removeFromBasket(Books book,int amount){
 
-        updateStock(book.isbn, "add",amount);//updates stock by removing one
-        items.remove(book);
+        if (amount<book.quantity){
+
+            updateStock(book.isbn, "add",amount);//updates stock by removing one
+
+        }else{
+            updateStock(book.isbn, "add",amount);//updates stock by removing one
+
+
+            items.remove(book);
+        }
+        
+        
 
     }
 

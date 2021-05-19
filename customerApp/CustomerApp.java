@@ -68,6 +68,7 @@ public class CustomerApp extends JFrame {
 	 */
 
 	public CustomerApp(){}
+	
 	public CustomerApp(String id) {
 		customerID=id;
 		Customer customer=new Customer(customerID);
@@ -133,6 +134,40 @@ public class CustomerApp extends JFrame {
 
 				customer.addItemToBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));
 
+				List <List<String>> basketList =customer.returnBasket();
+				List<String> basketArray =new ArrayList<>();
+				
+		
+				for (int i =0; i<basketList.size();i++){
+					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));
+	
+					
+				}	
+
+				
+			
+
+				DefaultListModel model = new DefaultListModel<>();
+
+				for (String i : basketArray) {
+
+					model.addElement(i);
+					
+					
+				}
+				displayBox.setModel(model);
+
+				
+				isbnTextField.setText(null);
+				typeTextField.setText(null);
+				titleTextField.setText(null);
+				langTextField.setText(null);
+				genreTextField.setText(null);
+				releaseDateTextField.setText(null);
+				retailPriceTextField.setText(null);
+				add1TextField.setText(null);
+				add2TextField.setText(null);
+				quantityComboBox.removeAllItems();
 				
 
 			}
@@ -145,6 +180,37 @@ public class CustomerApp extends JFrame {
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				customer.removeItemFromBasket(isbnTextField.getText(), Integer.parseInt(quantityComboBox.getSelectedItem().toString()));
+				
+				List <List<String>> basketList =customer.returnBasket();
+				List<String> basketArray =new ArrayList<>();
+				
+		
+				for (int i =0; i<basketList.size();i++){
+					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));
+	
+					
+				}	
+
+				DefaultListModel model = new DefaultListModel<>();
+
+				for (String i : basketArray) {
+
+					model.addElement(i);
+					
+					
+				}
+				displayBox.setModel(model);
+				isbnTextField.setText(null);
+				typeTextField.setText(null);
+				titleTextField.setText(null);
+				langTextField.setText(null);
+				genreTextField.setText(null);
+				releaseDateTextField.setText(null);
+				retailPriceTextField.setText(null);
+				add1TextField.setText(null);
+				add2TextField.setText(null);
+				quantityComboBox.removeAllItems();
 
 
 			}
@@ -153,6 +219,47 @@ public class CustomerApp extends JFrame {
 		contentPane.add(removeButton);
 		
 		JButton emptyBasketButton = new JButton("Empty Basket");
+
+		emptyBasketButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				customer.emptyItemsFromBasket();
+				
+				List <List<String>> basketList =customer.returnBasket();
+				List<String> basketArray =new ArrayList<>();
+				
+		
+				for (int i =0; i<basketList.size();i++){
+					basketArray.add(basketList.get(i).toString().replace("[", "").replace("]", ""));
+	
+					
+				}	
+
+				DefaultListModel model = new DefaultListModel<>();
+
+				for (String i : basketArray) {
+
+					model.addElement(i);
+					
+					
+				}
+				displayBox.setModel(model);	
+				isbnTextField.setText(null);
+				typeTextField.setText(null);
+				titleTextField.setText(null);
+				langTextField.setText(null);
+				genreTextField.setText(null);
+				releaseDateTextField.setText(null);
+				retailPriceTextField.setText(null);
+				add1TextField.setText(null);
+				add2TextField.setText(null);	
+				quantityComboBox.removeAllItems();		
+
+
+
+			}
+		});
+
 		emptyBasketButton.setBounds(337, 413, 153, 36);
 		contentPane.add(emptyBasketButton);
 		
@@ -186,6 +293,16 @@ public class CustomerApp extends JFrame {
 					
 				}
 				displayBox.setModel(model);
+				isbnTextField.setText(null);
+				typeTextField.setText(null);
+				titleTextField.setText(null);
+				langTextField.setText(null);
+				genreTextField.setText(null);
+				releaseDateTextField.setText(null);
+				retailPriceTextField.setText(null);
+				add1TextField.setText(null);
+				add2TextField.setText(null);
+				quantityComboBox.removeAllItems();
 	
 
 				
@@ -222,6 +339,16 @@ public class CustomerApp extends JFrame {
 					
 				}
 				displayBox.setModel(model);
+				isbnTextField.setText(null);
+				typeTextField.setText(null);
+				titleTextField.setText(null);
+				langTextField.setText(null);
+				genreTextField.setText(null);
+				releaseDateTextField.setText(null);
+				retailPriceTextField.setText(null);
+				add1TextField.setText(null);
+				add2TextField.setText(null);
+				quantityComboBox.removeAllItems();
 		
 
 
@@ -289,6 +416,17 @@ public class CustomerApp extends JFrame {
 					
 				}
 				displayBox.setModel(model);
+
+				isbnTextField.setText(null);
+				typeTextField.setText(null);
+				titleTextField.setText(null);
+				langTextField.setText(null);
+				genreTextField.setText(null);
+				releaseDateTextField.setText(null);
+				retailPriceTextField.setText(null);
+				add1TextField.setText(null);
+				add2TextField.setText(null);
+				quantityComboBox.removeAllItems();
 	
 
 
@@ -297,6 +435,32 @@ public class CustomerApp extends JFrame {
 		});
 		searchButton.setBounds(671, 413, 121, 36);
 		contentPane.add(searchButton);
+
+		JButton clearButton = new JButton("Clear Basket");
+		clearButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				
+
+			
+				isbnTextField.setText(null);
+				typeTextField.setText(null);
+				titleTextField.setText(null);
+				langTextField.setText(null);
+				genreTextField.setText(null);
+				releaseDateTextField.setText(null);
+				retailPriceTextField.setText(null);
+				add1TextField.setText(null);
+				add2TextField.setText(null);
+				quantityComboBox.removeAllItems();
+		
+
+
+
+			}
+		});
+		clearButton.setBounds(1119, 413, 140, 36);
+		contentPane.add(clearButton);
 		
 		JButton exitButton = new JButton("Exit");
 		exitButton.addActionListener(new ActionListener() {
@@ -312,7 +476,7 @@ public class CustomerApp extends JFrame {
 
 		
 
-		exitButton.setBounds(1119, 413, 89, 36);
+		exitButton.setBounds(1219, 413, 89, 36);
 		contentPane.add(exitButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -359,7 +523,7 @@ public class CustomerApp extends JFrame {
 			
 					}
 				}catch(NullPointerException e){
-					
+
 				}
 				
 			}
@@ -412,8 +576,13 @@ public class CustomerApp extends JFrame {
 		isbnTextField.setBounds(141, 25, 182, 26);
 		contentPane.add(isbnTextField);
 		isbnTextField.setColumns(10);
+
+
 		
 
 
 	}
+
+
 }
+
